@@ -13,7 +13,7 @@ bool save_settings();
 void run_setup();
 void scan_directory(std::string s);
 
-std::filesystem::directory_entry library_filepath;
+std::filesystem::directory_entry libraryfilepath;
 
 int main()
 {    
@@ -30,8 +30,11 @@ int main()
     //     std::cout << p.path().filename() << std::endl;
     // }
 
+    run_setup();
+    save_settings();
+
     std::cout << "Press any key to continue..." << std::endl;    
-    getch();
+    // getch();
 
     return 0;
 }
@@ -43,22 +46,24 @@ bool load_settings()
 }
 
 bool save_settings()
-{
-    // save settings to file
-    return true;
+{    
+    std::ofstream savefile("config.txt", std::ios::out);
+    savefile << libraryfilepath.path().string();
+
+    return savefile.fail();
 }
 
 void run_setup()
 {
-    while (!library_filepath.exists())
+    while (!libraryfilepath.exists())
     {
         char buffer[256];        
 
         std::cout << "Please enter a valid filepath:" << std::endl;
         std::cin >> buffer;
-        library_filepath.replace_filename(buffer);
+        libraryfilepath.replace_filename(buffer);
 
-        std::cout << library_filepath << std::endl;
+        // std::cout << libraryfilepath << std::endl;
     }
 }
 
