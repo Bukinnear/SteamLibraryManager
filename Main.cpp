@@ -7,70 +7,107 @@
 //cl /EHsc Main.cpp /nologo /std:c++latest
 
 std::vector<std::filesystem::directory_entry> dl;
+std::filesystem::directory_entry libraryfilepath;
 
+void print_header();
+bool create_settings_file();
 bool load_settings();
 bool save_settings();
 void run_setup();
 void scan_directory(std::string s);
 
-std::filesystem::directory_entry libraryfilepath;
-
 int main()
 {    
+    print_header();
 
-    // if (!load_settings())
-    // {
-    //     run_setup();
-    // }
-    
-    // scan_directory("c:/");
-    
-    // for (auto &p : dl)
-    // {
-    //     std::cout << p.path().filename() << std::endl;
-    // }
+    if (!load_settings())
+    {
+        run_setup();
+        save_settings();
+    }    
 
-    run_setup();
-    save_settings();
+    std::cout << std::endl << "finished" << std::endl;
 
-    std::cout << "Press any key to continue..." << std::endl;    
+    // std::cout << "Press any key to continue..." << std::endl;    
     // getch();
 
     return 0;
 }
 
-bool load_settings()
+void print_header()
 {
-    // check for valid settings file
+    std::cout << "---------------------------\n-                         -\n-  Steam Library Manager  -\n-                         -\n---------------------------" << std::endl << std::endl;
+}
+
+bool create_settings_file()
+{
     return false;
+}
+
+bool load_settings()
+{    
+    std::ifstream configfile("config.txt");
+    if (!configfile.is_open())
+    {
+        return false;
+    }
+
+    char line[256];
+
+    while (configfile.getline(line, sizeof line))
+    {
+        if (std::filesystem::exists(line))
+        {
+            libraryfilepath.assign(line);
+            std::cout << "library path is: " << libraryfilepath << std::endl;
+        }
+    }
+
+    return true;
 }
 
 bool save_settings()
 {    
     std::ofstream savefile("config.txt", std::ios::out);
     savefile << libraryfilepath.path().string();
+    savefile.close();
 
-    return savefile.fail();
+    if (savefile.fail() == 0)
+    {
+        return true;
+    }
+    else 
+    {
+        return false;
+    }
 }
 
 void run_setup()
 {
     while (!libraryfilepath.exists())
     {
-        char buffer[256];        
+        std::cout << std::endl << "Library filepath is invalid." << std::endl << "Please enter a valid filepath:" << std::endl;        
 
-        std::cout << "Please enter a valid filepath:" << std::endl;
-        std::cin >> buffer;
-        libraryfilepath.replace_filename(buffer);
+        char inputbuffer[256];
 
-        // std::cout << libraryfilepath << std::endl;
-    }
+        std::cin.getline(inputbuffer, sizeof inputbuffer);        
+        std::cout << inputbuffer << std::endl;
+
+        if (!std::filesystem::exists(inputbuffer))
+        {
+            std::cout << "path could not be found." << std::endl;
+            continue;
+        }
+        
+        libraryfilepath.replace_filename(inputbuffer);
+    }    
 }
 
-void scan_directory (std::string directory)
+void scan_directory (std::filesystem::directory_entry dir)
 {
-    for (auto &p : std::filesystem::directory_iterator(directory))
+    for (auto &p : std::filesystem::directory_iterator(dir))
     {
-        // dl.push_back(p);        
+        std::cout << p << std::endl;
+        // dl.push_back(p);
     }
 }
