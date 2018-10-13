@@ -6,8 +6,13 @@
 #include <string>
 //cl /EHsc Main.cpp /nologo /std:c++latest
 
-std::vector<std::filesystem::directory_entry> dl;
-std::filesystem::directory_entry libraryfilepath;
+struct app_details
+{
+    // name
+    // number
+    // filepath
+    // library id <- this will require error checking
+};
 
 void print_header();
 bool create_settings_file();
@@ -15,6 +20,9 @@ bool load_settings();
 bool save_settings();
 void run_setup();
 void scan_directory(std::string s);
+
+std::filesystem::directory_entry libraryfilepath;
+std::filesystem::directory_entry libraryapps;
 
 int main()
 {    
@@ -24,8 +32,18 @@ int main()
     {
         run_setup();
         save_settings();
-    }    
+    }  
 
+    std::cout << std::endl << "---------------------------\nListing all folders found in library " << libraryfilepath.path().string() << std::endl << "---------------------------" << std::endl << std::endl;
+    {
+        int index = 1;
+        for (auto &p : std::filesystem::directory_iterator(libraryapps))
+        {
+            std::cout << p.path().filename().string() << std::endl;
+            index++;
+        }
+    }
+    
     std::cout << std::endl << "finished" << std::endl;
 
     // std::cout << "Press any key to continue..." << std::endl;    
@@ -59,6 +77,7 @@ bool load_settings()
         if (std::filesystem::exists(line))
         {
             libraryfilepath.assign(line);
+            libraryapps.assign( libraryfilepath.path().string().append("\\steamapps\\common"));
             std::cout << "library path is: " << libraryfilepath << std::endl;
         }
     }
@@ -99,7 +118,7 @@ void run_setup()
             continue;
         }
         
-        libraryfilepath.replace_filename(inputbuffer);
+        libraryfilepath.assign(inputbuffer);
     }    
 }
 
