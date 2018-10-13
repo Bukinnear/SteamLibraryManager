@@ -4,7 +4,16 @@
 #include <filesystem>
 #include <vector>
 #include <string>
+
 //cl /EHsc Main.cpp /nologo /std:c++latest
+
+// commands
+// 1. List all games in a specific library (by size)
+// 2. List all games in specific library (aphabetical)
+// 3. List all installed games
+// 4. Change settings
+//      1. Add a library location
+//      2. Remove a library location
 
 struct app_details
 {
@@ -15,7 +24,6 @@ struct app_details
 };
 
 void print_header();
-bool create_settings_file();
 bool load_settings();
 bool save_settings();
 void run_setup();
@@ -34,7 +42,7 @@ int main()
         save_settings();
     }  
 
-    std::cout << std::endl << "---------------------------\nListing all folders found in library " << libraryfilepath.path().string() << std::endl << "---------------------------" << std::endl << std::endl;
+    std::cout << "-------------------------------------------\nListing all folders found in library " << libraryfilepath.path().string() << std::endl << "-------------------------------------------" << std::endl << std::endl;
     {
         int index = 1;
         for (auto &p : std::filesystem::directory_iterator(libraryapps))
@@ -54,12 +62,7 @@ int main()
 
 void print_header()
 {
-    std::cout << "---------------------------\n-                         -\n-  Steam Library Manager  -\n-                         -\n---------------------------" << std::endl << std::endl;
-}
-
-bool create_settings_file()
-{
-    return false;
+    std::cout << std::endl << "-------------------------------------------\n-                                         -\n-          Steam Library Manager          -\n-                                         -\n-------------------------------------------" << std::endl << std::endl;
 }
 
 bool load_settings()
@@ -78,7 +81,7 @@ bool load_settings()
         {
             libraryfilepath.assign(line);
             libraryapps.assign( libraryfilepath.path().string().append("\\steamapps\\common"));
-            std::cout << "library path is: " << libraryfilepath << std::endl;
+            // std::cout << "library path is: " << libraryfilepath << std::endl;
         }
     }
 
