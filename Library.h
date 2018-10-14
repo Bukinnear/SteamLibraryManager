@@ -1,18 +1,22 @@
 #pragma once
 #include <filesystem>
 #include <string>
+#include <map>
 
 class library
 {
     private:
     std::filesystem::directory_entry library_path;    
     std::filesystem::directory_entry apps_directory;
+    std::filesystem::directory_entry app_ids_directory;
+    std::map<std::filesystem::directory_entry, int> app_ids;
     bool is_valid_library(std::filesystem::directory_entry dir);
+    void find_app_ids();
 
     public:
     library(std::string filepath);
     std::string path();
-    void print_sub_directories();
+    void print_sub_directories(bool sort_by_size);
 };
 
 struct InvalidLibrary : public std::exception

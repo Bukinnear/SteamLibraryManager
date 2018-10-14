@@ -8,11 +8,3 @@ bool load_settings();
 void run_setup();
 
 std::vector<library> libraries;
-
-// struct app_details
-// {
-//     // name
-//     // number
-//     // filepath
-//     // library id
-// };

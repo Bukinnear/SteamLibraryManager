@@ -31,11 +31,7 @@ int main()
         save_settings();
     }
 
-    for (auto p : libraries)
-    {
-        p.print_sub_directories();
-    }
-
+    
     std::cout << std::endl << "finished" << std::endl;
               
     // std::cout << "\n\nThe program will now exit.\n\nPress any key to continue..." << std::endl;
