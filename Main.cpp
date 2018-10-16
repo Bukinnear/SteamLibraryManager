@@ -11,7 +11,7 @@
 
 namespace fs = std::filesystem;
 
-// cl /EHsc Main.cpp /nologo /std:c++latest
+// cl /EHsc Main.cpp Library.cpp /nologo /std:c++latest
 
 // commands:
 // 1. List all games in a specific library (by size)

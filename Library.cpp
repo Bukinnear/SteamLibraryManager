@@ -48,47 +48,50 @@ void library::find_app_ids()
             }
             else 
             {
-                std::string a;
-                std::string b;
-
+                // this part is kinda dirty
                 int id = 0;
-                fs::directory_entry path;
+                fs::directory_entry name;
 
-                while (!id_file.eof())
+                char id_buffer[256];
+                char name_buffer[256];
+
+                // set place 24
+                id_file.seekg(24);
+
+                // get id
+                id_file.get(id_buffer, sizeof id_buffer, '\"');
+
+                // skip to the line with the directory name
+                for (int i = 0; i < 4; i++)
+                {                    
+                    id_file.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                }
+                
+                // skip to the actual name
+                for (int i = 0; i < 3; i++)
                 {
-                    id_file >> a >> b;
-                    // std::cout << a << std::endl;
+                    id_file.ignore(std::numeric_limits<std::streamsize>::max(), '\"');
+                }
 
-                    std::cout << a << " : " << b << std::endl;
+                // get name
+                id_file.get(name_buffer, sizeof name_buffer, '\"');
 
-                    if (a == "\"appid\"")
-                    {
-                        b.erase(0, 1);
-                        b.erase(b.length()-1, 1);  
-                        id = stoi(b);                                         
-                    }
-                    if (a == "\"installdir\n")
-                    {
-                        b.erase(0, 1);
-                        b.erase(b.length()-1, 1); 
-                        path.assign(b);
-                    } 
-                }     
-                std::cout << a << " : " << b << std::endl;
-                if (id != 0 && path != "")
+                id = std::stoi(id_buffer);
+
+                std::string n = apps_directory.path().string() + "\\" + std::string(name_buffer);
+                name.assign(n);    
+
+                if (name.path().string() != "" && id != 0)
                 {
-                    // std::cout << "test2" << std::endl;
-                    app_ids.insert_or_assign(path, id);
-                }                          
+                    app_ids.insert_or_assign(name, id);
+                }
+                else
+                {
+                    std::cout << "\nERROR\nThere was a problem scanning the file:\n" << p.path() << std::endl << std::endl;
+                }
             }
             id_file.close();
         }
-    }
-    // std::cout << app_ids.size() << std::endl;
-    for (auto p : app_ids)
-    {
-        // std::cout << "test3" << std::endl;
-        std::cout << p.first << " : " << p.second << std::endl;
     }
 }
 

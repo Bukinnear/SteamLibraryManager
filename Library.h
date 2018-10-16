@@ -26,3 +26,11 @@ struct InvalidLibrary : public std::exception
         return "Invalid Library Exception:\nFilepath either does not exist, or does not contain steamapps.";
     }
 };
+
+// struct NullAppIdOrName : public std::exception
+// {
+//     const char * what () const throw ()
+//     {
+//         return "Something went wrong while scanning the app Ids.";
+//     }
+// };
