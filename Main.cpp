@@ -30,7 +30,6 @@ int main()
         run_setup();
         save_settings();
     }
-
     
     std::cout << std::endl << "finished" << std::endl;
               

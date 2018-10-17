@@ -14,7 +14,7 @@ library::library(std::string filepath)
         library_path = fs::directory_entry(filepath);
         apps_directory.assign(library_path.path().string().append("\\steamapps\\common"));
         app_ids_directory.assign(library_path.path().string().append("\\steamapps"));
-        find_app_ids();
+        scan_library_apps();
     }
     else
     {
@@ -34,7 +34,7 @@ bool library::is_valid_library(fs::directory_entry dir)
     return false;
 }
 
-void library::find_app_ids()
+void library::scan_library_apps()
 {
     for (auto p : fs::directory_iterator(app_ids_directory))
     {
@@ -49,11 +49,11 @@ void library::find_app_ids()
             else 
             {
                 // this part is kinda dirty
-                int id = 0;
-                fs::directory_entry name;
+                app thisapp;
 
                 char id_buffer[256];
                 char name_buffer[256];
+                char size_buffer[256];
 
                 // set place 24
                 id_file.seekg(24);
@@ -76,14 +76,40 @@ void library::find_app_ids()
                 // get name
                 id_file.get(name_buffer, sizeof name_buffer, '\"');
 
-                id = std::stoi(id_buffer);
+                // skip to the line with the directory size
+                for (int i = 0; i < 3; i++)
+                {                    
+                    id_file.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                }
+                
+                // skip to the actual size
+                for (int i = 0; i < 3; i++)
+                {
+                    id_file.ignore(std::numeric_limits<std::streamsize>::max(), '\"');
+                }
+
+                // get size
+                id_file.get(size_buffer, sizeof size_buffer, '\"');                
+                
+                thisapp.id = std::stoi(id_buffer);
 
                 std::string n = apps_directory.path().string() + "\\" + std::string(name_buffer);
-                name.assign(n);    
+                thisapp.path.assign(n);  
 
-                if (name.path().string() != "" && id != 0)
+                try
                 {
-                    app_ids.insert_or_assign(name, id);
+                    // size in GB
+                    double_t s = std::stoull(size_buffer);
+                    thisapp.size = s / 1024 / 1024 / 1024;
+                }
+                catch(...)
+                {
+                    std::cout << std::endl << "ERROR\nFailed to convert the size of" << p.path().filename() << " - the file size is probably bigger than the data type. We're gonna need a bigger boat..." << std::endl << std::endl;
+                }                
+
+                if (thisapp.path.path().string() != "" && thisapp.id != 0)
+                {
+                    apps.push_back(thisapp);
                 }
                 else
                 {
@@ -103,11 +129,16 @@ std::string library::path()
 void library::print_sub_directories(bool sort_by_size)
 {
     std::cout << std::endl << "-------------------------------------------\nListing all folders found in library " << apps_directory.path().string() << std::endl << "-------------------------------------------" << std::endl << std::endl;
+    if (sort_by_size)
+    {
+
+    }
+    else
     {
         int index = 1;
         std::string spacer = ".     ";
 
-        for (auto &p : fs::directory_iterator(apps_directory))
+        for (auto &p : apps)
         {
             if (index == 10)
             {
@@ -118,7 +149,7 @@ void library::print_sub_directories(bool sort_by_size)
                 spacer = ".   ";
             }
 
-            std::cout << index << spacer << p.path().filename().string() << std::endl;
+            std::cout << index << spacer << p.path.path().filename().string() << std::endl;
             index++;
         }
     }
