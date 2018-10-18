@@ -3,6 +3,7 @@
 #include <fstream>
 #include <string>
 #include <exception>
+#include <algorithm>
 #include "Library.h"
 
 namespace fs = std::filesystem;
@@ -14,7 +15,7 @@ library::library(std::string filepath)
         library_path = fs::directory_entry(filepath);
         apps_directory.assign(library_path.path().string().append("\\steamapps\\common"));
         app_ids_directory.assign(library_path.path().string().append("\\steamapps"));
-        scan_library_apps();
+        catalogue_library_apps();
     }
     else
     {
@@ -34,7 +35,7 @@ bool library::is_valid_library(fs::directory_entry dir)
     return false;
 }
 
-void library::scan_library_apps()
+void library::catalogue_library_apps()
 {
     for (auto p : fs::directory_iterator(app_ids_directory))
     {
@@ -121,6 +122,11 @@ void library::scan_library_apps()
     }
 }
 
+bool sort_apps_aphabetically(const app a, const app b)
+{
+    return a.path.path().filename().string() < b.path.path().filename().string();
+}
+
 std::string library::path()
 {
     return library_path.path().string();
@@ -131,26 +137,34 @@ void library::print_sub_directories(bool sort_by_size)
     std::cout << std::endl << "-------------------------------------------\nListing all folders found in library " << apps_directory.path().string() << std::endl << "-------------------------------------------" << std::endl << std::endl;
     if (sort_by_size)
     {
-
+        if (!std::is_sorted(apps.begin(), apps.end()))
+        {
+            std::sort(apps.begin(), apps.end());
+        }        
     }
     else
     {
-        int index = 1;
-        std::string spacer = ".     ";
-
-        for (auto &p : apps)
+        if (!std::is_sorted(apps.begin(), apps.end(), sort_apps_aphabetically))
         {
-            if (index == 10)
-            {
-                spacer = ".    ";
-            }
-            else if (index == 100)
-            {
-                spacer = ".   ";
-            }
-
-            std::cout << index << spacer << p.path.path().filename().string() << std::endl;
-            index++;
+            std::sort(apps.begin(), apps.end(), sort_apps_aphabetically);
         }
+    }
+
+    int index = 1;
+    std::string spacer = ".     ";
+
+    for (auto &p : apps)
+    {
+        if (index == 10)
+        {
+            spacer = ".    ";
+        }
+        else if (index == 100)
+        {
+            spacer = ".   ";
+        }
+
+        std::cout << index << spacer << p.path.path().filename().string() << std::endl;
+        index++;
     }
 }

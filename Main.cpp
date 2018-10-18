@@ -30,6 +30,9 @@ int main()
         run_setup();
         save_settings();
     }
+
+    libraries[0].print_sub_directories(false);
+    libraries[0].print_sub_directories();
     
     std::cout << std::endl << "finished" << std::endl;
               
