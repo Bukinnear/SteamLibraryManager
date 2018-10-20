@@ -3,10 +3,15 @@
 #include <fstream>
 #include <string>
 #include <exception>
-#include <algorithm>
 #include "Library.h"
+#include "Output.h"
 
 namespace fs = std::filesystem;
+
+bool sort_apps_aphabetically(const app a, const app b)
+{
+    return a.path.path().filename().string() < b.path.path().filename().string();
+}
 
 library::library(std::string filepath)
 {
@@ -37,15 +42,15 @@ bool library::is_valid_library(fs::directory_entry dir)
 
 void library::catalogue_library_apps()
 {
-    for (auto p : fs::directory_iterator(app_ids_directory))
+    for (auto current_file : fs::directory_iterator(app_ids_directory))
     {
-        std::string s = p.path().filename().string();
+        std::string s = current_file.path().filename().string();
         if (s.find(".acf") != std::string::npos)
         {
-            std::ifstream id_file(p);
+            std::ifstream id_file(current_file);
             if (!id_file.is_open())
             {
-                std::cout << "Warning: could not open " << p << std::endl;
+                std::cout << "Warning: could not open " << current_file << std::endl;
             }
             else 
             {
@@ -97,6 +102,8 @@ void library::catalogue_library_apps()
                 std::string n = apps_directory.path().string() + "\\" + std::string(name_buffer);
                 thisapp.path.assign(n);  
 
+                thisapp.manifest_path.assign(current_file);
+
                 try
                 {
                     // size in GB
@@ -105,7 +112,7 @@ void library::catalogue_library_apps()
                 }
                 catch(...)
                 {
-                    std::cout << std::endl << "ERROR\nFailed to convert the size of" << p.path().filename() << " - the file size is probably bigger than the data type. We're gonna need a bigger boat..." << std::endl << std::endl;
+                    std::cout << std::endl << "ERROR\nFailed to convert the size of" << current_file.path().filename() << " - the file size is probably bigger than the data type. We're gonna need a bigger boat..." << std::endl << std::endl;
                 }                
 
                 if (thisapp.path.path().string() != "" && thisapp.id != 0)
@@ -114,7 +121,7 @@ void library::catalogue_library_apps()
                 }
                 else
                 {
-                    std::cout << "\nERROR\nThere was a problem scanning the file:\n" << p.path() << std::endl << std::endl;
+                    std::cout << "\nERROR\nThere was a problem scanning the file:\n" << current_file.path() << std::endl << std::endl;
                 }
             }
             id_file.close();
@@ -122,19 +129,14 @@ void library::catalogue_library_apps()
     }
 }
 
-bool sort_apps_aphabetically(const app a, const app b)
-{
-    return a.path.path().filename().string() < b.path.path().filename().string();
-}
-
 std::string library::path()
 {
     return library_path.path().string();
 }
 
-void library::print_sub_directories(bool sort_by_size)
+void library::print_all_apps(int* index, bool sort_by_size)
 {
-    std::cout << std::endl << "-------------------------------------------\nListing all folders found in library " << apps_directory.path().string() << std::endl << "-------------------------------------------" << std::endl << std::endl;
+    // output::print_sub_header("Listing all folders found in library " + apps_directory.path().string());
     if (sort_by_size)
     {
         if (!std::is_sorted(apps.begin(), apps.end()))
@@ -150,21 +152,14 @@ void library::print_sub_directories(bool sort_by_size)
         }
     }
 
-    int index = 1;
-    std::string spacer = ".     ";
-
     for (auto &p : apps)
     {
-        if (index == 10)
-        {
-            spacer = ".    ";
-        }
-        else if (index == 100)
-        {
-            spacer = ".   ";
-        }
-
-        std::cout << index << spacer << p.path.path().filename().string() << std::endl;
-        index++;
+        std::cout << output::create_menu_item(*index, p.path.path().filename().string()) << std::endl;
+        (*index)++;
     }
+}
+
+app library::get_app(int index)
+{    
+    return apps[index];
 }

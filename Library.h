@@ -5,6 +5,7 @@
 
 struct app {
     std::filesystem::directory_entry path;
+    std::filesystem::directory_entry manifest_path;
     int id;
     float size;
 
@@ -38,6 +39,7 @@ class library
     public:
     library(std::string filepath);
     std::string path();
-    void print_sub_directories(bool sort_by_size = true);
+    void print_all_apps(int* index, bool sort_by_size = true);
+    app get_app(int index);
 };
 

@@ -8,22 +8,17 @@
 #include <exception>
 #include "Main.h"
 #include "Library.h"
+#include "Menu.h"
+#include "Output.h"
 
 namespace fs = std::filesystem;
 
-// cl /EHsc Main.cpp Library.cpp /nologo /std:c++latest
-
-// commands:
-// 1. List all games in a specific library (by size)
-// 2. List all games in specific library (aphabetical)
-// 3. List all installed games
-// 4. Change settings
-//      1. Add a library location
-//      2. Remove a library location
+// cl /EHsc Main.cpp Library.cpp Menu.cpp Output.cpp /nologo /std:c++latest
+// cd C:\Code\SteamLibraryManager
  
 int main()
 {
-    print_header();
+    output::print_header();
 
     if (!load_settings())
     {
@@ -31,20 +26,15 @@ int main()
         save_settings();
     }
 
-    libraries[0].print_sub_directories(false);
-    libraries[0].print_sub_directories();
-    
+    menu menu(&libraries);
+    menu.start();
+
     std::cout << std::endl << "finished" << std::endl;
               
     // std::cout << "\n\nThe program will now exit.\n\nPress any key to continue..." << std::endl;
     // getch();
 
     return 0;
-}
-
-void print_header()
-{
-    std::cout << std::endl << "-------------------------------------------\n-                                         -\n-          Steam Library Manager          -\n-                                         -\n-------------------------------------------" << std::endl;
 }
 
 bool save_settings()
