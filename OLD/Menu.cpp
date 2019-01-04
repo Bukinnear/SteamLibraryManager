@@ -9,12 +9,6 @@ menu::menu(std::vector<library>* libs) : libraries(libs) { }
 
 void menu::start()
 {
-    /**
-     * Display all in libraries vector
-     * Accept int (library number)
-     * Call library_menu(selected library)
-     **/ 
-
     output::print_sub_header("Libraries");
     
     int index = 1;    
