@@ -1,2 +1,3 @@
-*.obj
-config.txt
+**/*.obj
+**/*.pdb
+**/*.ilk

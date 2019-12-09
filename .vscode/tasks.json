@@ -1,0 +1,19 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+      {
+        "label": "default msvc build",
+        "type": "shell",
+        "command": "cl.exe",
+        "args": ["/EHsc", "/Zi", "/Fe:", "Build/SteamLibraryManager.exe", "Source/main.cpp", "Source/Test.cpp"],
+        "group": {
+          "kind": "build",
+          "isDefault": true
+        },
+        "presentation": {
+          "reveal": "always"
+        },
+        "problemMatcher": "$msCompile"
+      }
+    ]
+  }

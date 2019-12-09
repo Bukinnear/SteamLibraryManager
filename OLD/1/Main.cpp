@@ -138,3 +138,76 @@ void run_setup()
         }
     }
 }
+
+
+/*
+int main(int argc, char const *argv[])
+{ 
+    if (!configFileExists())
+    {
+        runFirstSetup();
+    }
+     return 0;
+} 
+
+bool configFileExists()
+{    
+    return fs::exists("config.txt");
+}
+
+int runFirstSetup()
+{
+    std::vector<fs::directory_entry> allDrives = getAllDrivePaths();
+
+    for (auto i : allDrives)   
+    {
+        std::cout << i.path().string() << "\n";
+        auto dirIterator = fs::recursive_directory_iterator(i);
+
+        for (auto p : dirIterator)
+        {
+            auto status = fs::status(p.path());
+
+            std::cout << p.path().string() << "\n";
+                        
+            // https://stackoverflow.com/questions/11755422/c-how-to-retrieve-a-file-permission-and-ownership-via-win32-api
+        }
+    }
+    
+    return 0;
+}
+
+std::vector<std::filesystem::directory_entry> getAllDrivePaths()
+{
+    // All of this copied wholecloth from here:
+    // https://stackoverflow.com/questions/18572944/getlogicaldrivestrings-and-char-where-am-i-doing-wrongly
+
+    typedef wchar_t* LPWSTR, *PWSTR;
+
+    std::vector<std::filesystem::directory_entry> returnVar;
+
+    DWORD dwSize = MAX_PATH;
+    char szLogicalDrives[MAX_PATH] = {0};
+
+    // use the correct variation:
+    //https://stackoverflow.com/questions/20611865/argument-of-type-char-is-incompatible-with-parameter-of-type-lpwstr
+    DWORD dwResult = GetLogicalDriveStringsA(dwSize, szLogicalDrives); 
+
+    if (dwResult > 0 && dwResult <= MAX_PATH)
+    {
+        char* szSingleDrive = szLogicalDrives;
+        while(*szSingleDrive)
+        {            
+            if (fs::exists(szSingleDrive))
+            {
+                // printf("Drive: %s\n", szSingleDrive);
+                returnVar.push_back(fs::directory_entry(szSingleDrive));
+            }
+
+            // get the next drive
+            szSingleDrive += strlen(szSingleDrive) + 1;
+        }
+    }
+    return returnVar;
+}
+*/
