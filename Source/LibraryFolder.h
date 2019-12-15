@@ -5,9 +5,9 @@
 class LibraryFolder
 {
  public:
+    LibraryFolder(const char * Path);
     LibraryFolder(std::string Path);
     bool isValidDirectory();
-    bool isValidLibrary();
     std::string getFolderName();
     std::string getFolderPath();
 private:

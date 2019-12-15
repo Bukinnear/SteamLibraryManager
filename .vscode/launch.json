@@ -12,8 +12,9 @@
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}/Build/",
-            "environment": [],
-            "externalConsole": true
+            "environment": [],                                    
+            "externalConsole": true,
+            "symbolSearchPath": "C:\\Code\\SteamLibraryManager;C:\\Code\\SteamLibraryManager\\Build"            
         }
     ]
 }

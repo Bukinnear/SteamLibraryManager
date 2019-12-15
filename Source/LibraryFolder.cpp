@@ -5,6 +5,11 @@
 
 namespace fs = std::experimental::filesystem;
 
+LibraryFolder::LibraryFolder(const char * Path)
+{
+    RootDirectory = new fs::directory_entry(Path);
+}
+
 LibraryFolder::LibraryFolder(std::string Path)
 {
     RootDirectory = new fs::directory_entry(Path);
@@ -12,12 +17,7 @@ LibraryFolder::LibraryFolder(std::string Path)
 
 bool LibraryFolder::isValidDirectory()
 {    
-    return fs::exists(*RootDirectory);
-}
-
-bool LibraryFolder::isValidLibrary()
-{
-    return false;
+    return (fs::exists(*RootDirectory) && fs::is_directory(*RootDirectory));
 }
 
 std::string LibraryFolder::getFolderName()
