@@ -10,6 +10,6 @@ class LibraryFolder
     bool isValidDirectory();
     std::string getFolderName();
     std::string getFolderPath();
-private:
+protected:
     std::experimental::filesystem::directory_entry * RootDirectory;
 };

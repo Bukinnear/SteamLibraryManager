@@ -1,5 +1,7 @@
 #pragma once
 
+const char * MainLibPath = "C:\\Program Files (x86)\\Steam";
+
 /*
 #include "Library.h"    
 #include <exception>    // Exceptions
