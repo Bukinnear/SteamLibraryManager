@@ -1,5 +1,7 @@
 #pragma once
 #include "LibraryFolder.h"
+#include <iostream>
+#include <filesystem>
 #include <string>
 #include <set>
 

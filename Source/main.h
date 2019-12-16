@@ -1,4 +1,8 @@
 #pragma once
+#include "LibraryFolder.h"
+#include "Library.h"
+#include <string>
+#include <iostream>
 
 const char * MainLibPath = "C:\\Program Files (x86)\\Steam";
 

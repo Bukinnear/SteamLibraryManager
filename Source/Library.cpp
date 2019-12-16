@@ -1,8 +1,5 @@
 #pragma once
 #include "Library.h"
-#include <iostream>
-#include <filesystem>
-#include <string>
 
 namespace fs = std::experimental::filesystem;
 
@@ -27,5 +24,5 @@ void Library::BuildLibraryList()
 
 const std::set<LibraryFolder*> * Library::GetLibraryList()
 {
-
+    return FolderList;
 }

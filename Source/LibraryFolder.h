@@ -7,9 +7,13 @@ class LibraryFolder
  public:
     LibraryFolder(const char * Path);
     LibraryFolder(std::string Path);
-    bool isValidDirectory();
-    std::string getFolderName();
-    std::string getFolderPath();
+    friend bool operator==(const LibraryFolder &, const LibraryFolder &) { return true; };
+    //friend bool operator == (const LibraryFolder &, const LibraryFolder &);
+    //friend bool operator!= (const LibraryFolder &, const LibraryFolder &);
+
+    const bool isValidDirectory();
+    const std::string getFolderName();
+    const std::string getFolderPath();
 protected:
     std::experimental::filesystem::directory_entry * RootDirectory;
 };
