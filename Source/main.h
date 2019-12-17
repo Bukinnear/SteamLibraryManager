@@ -5,7 +5,6 @@
 #include <iostream>
 
 const char * MainLibPath = "C:\\Program Files (x86)\\Steam";
-const char * MainLibGamePath = "C:\\Program Files (x86)\\Steam\\steamapps\\common";
 
 /*
 #include "Library.h"    

@@ -31,7 +31,12 @@ const std::string LibraryFolder::GetFolderPath() const
     return RootDirectory.path().string();
 }
 
-const float LibraryFolder::GetFolderSize() const
+const int LibraryFolder::GetFolderSize() const
 {
     return FolderSize;
+}
+
+void LibraryFolder::CalculateFolderSize()
+{
+    
 }

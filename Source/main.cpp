@@ -10,9 +10,7 @@ int main(int argc, char const *argv[])
 {
     for (;;)
     {
-        auto library = Library(MainLibGamePath);
-        std::cout << library.ContainsFolder("Forager");
-        //std::cout << "Library contains Forager: " << library.ContainsFolder("Forager");
+        auto library = Library(MainLibPath);
 
         /*
         char FolderPath[255];

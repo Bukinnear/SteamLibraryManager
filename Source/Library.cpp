@@ -17,7 +17,7 @@ Library::Library(std::string Path) : LibraryFolder(Path)
 
 void Library::BuildLibraryList()
 {
-    for (auto p : fs::directory_iterator(RootDirectory.path()))
+    for (auto p : fs::directory_iterator(CommonDirectory.path()))
     {
         LibraryFolder s = LibraryFolder(p.path().string());
         FolderList.insert(s);
