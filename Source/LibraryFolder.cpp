@@ -1,8 +1,6 @@
 #pragma once
 #include "LibraryFolder.h"
 
-namespace fs = std::experimental::filesystem;
-
 LibraryFolder::LibraryFolder(const char * Path)
 {
     RootDirectory = fs::directory_entry(Path);
@@ -15,24 +13,7 @@ LibraryFolder::LibraryFolder(std::string Path)
 
 bool LibraryFolder::operator==(const LibraryFolder & rhs) const
 {
-    return getFolderPath() == rhs.getFolderPath(); 
-}
-
-bool LibraryFolder::operator==(const std::string & rhs) const
-{
-    std::string compare = rhs;
-    for (;;)
-    {
-        if (compare.rfind(" "))
-        {
-            compare.pop_back();
-        }
-        else
-        {
-            break;
-        }        
-    }
-    return this->getFolderPath() == compare || this->getFolderName() == compare;
+    return GetFolderPath() == rhs.GetFolderPath(); 
 }
 
 const bool LibraryFolder::IsValidDirectory() const
@@ -48,4 +29,9 @@ const std::string LibraryFolder::GetFolderName() const
 const std::string LibraryFolder::GetFolderPath() const
 {
     return RootDirectory.path().string();
+}
+
+const float LibraryFolder::GetFolderSize() const
+{
+    return FolderSize;
 }
