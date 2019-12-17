@@ -11,9 +11,9 @@ class LibraryFolder
     bool operator==(const LibraryFolder &) const;
     bool operator==(const std::string &) const;
 
-    const bool isValidDirectory() const;
-    const std::string getFolderName() const;
-    const std::string getFolderPath() const;
+    const bool IsValidDirectory() const;
+    const std::string GetFolderName() const;
+    const std::string GetFolderPath() const;
 protected:
     std::experimental::filesystem::directory_entry RootDirectory;
 };

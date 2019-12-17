@@ -35,17 +35,17 @@ bool LibraryFolder::operator==(const std::string & rhs) const
     return this->getFolderPath() == compare || this->getFolderName() == compare;
 }
 
-const bool LibraryFolder::isValidDirectory() const
+const bool LibraryFolder::IsValidDirectory() const
 {
     return (fs::exists(RootDirectory) && fs::is_directory(RootDirectory));
 }
 
-const std::string LibraryFolder::getFolderName() const
+const std::string LibraryFolder::GetFolderName() const
 {
     return RootDirectory.path().filename().string();
 }
 
-const std::string LibraryFolder::getFolderPath() const
+const std::string LibraryFolder::GetFolderPath() const
 {
     return RootDirectory.path().string();
 }

@@ -10,6 +10,8 @@ int main(int argc, char const *argv[])
 {
     for (;;)
     {
+        auto library = Library(MainLibPath);
+
         /*
         char FolderPath[255];
         std::cout << "Enter a path: ";
