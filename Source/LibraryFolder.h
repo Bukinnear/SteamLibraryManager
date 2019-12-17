@@ -1,19 +1,19 @@
 #pragma once
 #include <filesystem>
 #include <string>
+#include <iostream>
 
 class LibraryFolder
 {
  public:
     LibraryFolder(const char * Path);
     LibraryFolder(std::string Path);
-    friend bool operator==(const LibraryFolder &, const LibraryFolder &) { return true; };
-    //friend bool operator == (const LibraryFolder &, const LibraryFolder &);
-    //friend bool operator!= (const LibraryFolder &, const LibraryFolder &);
+    bool operator==(const LibraryFolder &) const;
+    bool operator==(const std::string &) const;
 
-    const bool isValidDirectory();
-    const std::string getFolderName();
-    const std::string getFolderPath();
+    const bool isValidDirectory() const;
+    const std::string getFolderName() const;
+    const std::string getFolderPath() const;
 protected:
-    std::experimental::filesystem::directory_entry * RootDirectory;
+    std::experimental::filesystem::directory_entry RootDirectory;
 };

@@ -10,9 +10,9 @@ class Library : public LibraryFolder
     public:
     Library(const char * Path);
     Library(std::string Path);
-    const std::set<LibraryFolder*> * GetLibraryList();
+    const std::set<LibraryFolder*> * const GetLibraryList() const;
     protected:
-    private:
-    std::set<LibraryFolder*> * FolderList;
+    std::set<LibraryFolder*> FolderList;
     void BuildLibraryList();
+    private:
 };

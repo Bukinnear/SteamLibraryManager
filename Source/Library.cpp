@@ -15,14 +15,14 @@ Library::Library(std::string Path) : LibraryFolder(Path)
 
 void Library::BuildLibraryList()
 {
-    for (auto p : fs::directory_iterator(RootDirectory->path()))
+    for (auto p : fs::directory_iterator(RootDirectory.path()))
     {
         LibraryFolder * s = new LibraryFolder(p.path().string());
-        FolderList->insert(s);
+        FolderList.insert(s);
     }
 }
 
-const std::set<LibraryFolder*> * Library::GetLibraryList()
+const std::set<LibraryFolder*> * const Library::GetLibraryList() const
 {
-    return FolderList;
+    return & FolderList;
 }
