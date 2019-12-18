@@ -4,11 +4,13 @@
 LibraryFolder::LibraryFolder(const char * Path)
 {
     RootDirectory = fs::directory_entry(Path);
+    CalculateFolderSize();
 }
 
 LibraryFolder::LibraryFolder(std::string Path)
 {
     RootDirectory = fs::directory_entry(Path);
+    CalculateFolderSize();
 }
 
 bool LibraryFolder::operator==(const LibraryFolder & rhs) const
@@ -38,5 +40,24 @@ const int LibraryFolder::GetFolderSize() const
 
 void LibraryFolder::CalculateFolderSize()
 {
-    
+    if (!IsValidDirectory() || fs::is_empty(RootDirectory)) { return; }
+
+    double size = 0;
+
+    for (auto & p : fs::recursive_directory_iterator(RootDirectory))
+    {
+        if (fs::is_directory(p) || fs::is_empty(p)) 
+        {
+            continue; 
+        }
+        try
+        {
+            size += (fs::file_size(p) / 1024);
+        }
+        catch(const std::exception& e)
+        {
+            std::cerr << "\r\nSomething went wrong while getting the file size of \'" << p.path() << "\'\r\n" << e.what() << '\r\n';
+        }
+    }
+    FolderSize = size;
 }

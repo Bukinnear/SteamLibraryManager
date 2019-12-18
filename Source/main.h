@@ -6,6 +6,8 @@
 
 const char * MainLibPath = "C:\\Program Files (x86)\\Steam";
 
+const char * ExampleGameFolder = "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Borderlands 2";
+
 /*
 #include "Library.h"    
 #include <exception>    // Exceptions

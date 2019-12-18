@@ -20,7 +20,7 @@ class LibraryFolder
     
 protected:
     fs::directory_entry RootDirectory;
-    int FolderSize = 0;
+    double FolderSize = 0;
 
     void CalculateFolderSize();
 
