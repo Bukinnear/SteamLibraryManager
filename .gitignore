@@ -1,4 +1,4 @@
 **/*.obj
 **/*.pdb
 **/*.ilk
-Build
+/Build/*
