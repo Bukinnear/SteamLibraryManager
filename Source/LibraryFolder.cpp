@@ -18,6 +18,16 @@ bool LibraryFolder::operator==(const LibraryFolder & rhs) const
     return GetFolderPath() == rhs.GetFolderPath(); 
 }
 
+bool LibraryFolder::operator<(const LibraryFolder & rhs) const
+{
+    return GetFolderSize() < rhs.GetFolderSize(); 
+}
+
+bool LibraryFolder::operator>(const LibraryFolder & rhs) const
+{
+    return GetFolderSize() > rhs.GetFolderSize(); 
+}
+
 const bool LibraryFolder::IsValidDirectory() const
 {
     return (fs::exists(RootDirectory) && fs::is_directory(RootDirectory));
