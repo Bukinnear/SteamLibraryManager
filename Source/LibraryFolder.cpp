@@ -4,13 +4,11 @@
 LibraryFolder::LibraryFolder(const char * Path)
 {
     RootDirectory = fs::directory_entry(Path);
-    FolderSize = CalculateFolderSize();
 }
 
 LibraryFolder::LibraryFolder(std::string Path)
 {
     RootDirectory = fs::directory_entry(Path);
-    FolderSize = CalculateFolderSize();
 }
 
 bool LibraryFolder::operator==(const LibraryFolder & rhs) const
@@ -71,4 +69,9 @@ const uintmax_t LibraryFolder::CalculateFolderSize() const
         }
     }
     return FolderSize;
+}
+
+void LibraryFolder::RefreshFolder() const
+{
+    CalculateFolderSize();
 }
