@@ -4,13 +4,13 @@
 LibraryFolder::LibraryFolder(const char * Path)
 {
     RootDirectory = fs::directory_entry(Path);
-    CalculateFolderSize();
+    FolderSize = CalculateFolderSize();
 }
 
 LibraryFolder::LibraryFolder(std::string Path)
 {
     RootDirectory = fs::directory_entry(Path);
-    CalculateFolderSize();
+    FolderSize = CalculateFolderSize();
 }
 
 bool LibraryFolder::operator==(const LibraryFolder & rhs) const
@@ -38,11 +38,11 @@ const uintmax_t LibraryFolder::GetFolderSize() const
     return FolderSize;
 }
 
-void LibraryFolder::CalculateFolderSize()
+const uintmax_t LibraryFolder::CalculateFolderSize() const
 {
-    if (!IsValidDirectory() || fs::is_empty(RootDirectory)) { return; }
+    if (!IsValidDirectory() || fs::is_empty(RootDirectory)) { return 0; }
     
-    uintmax_t size = 0;
+    uintmax_t FolderSize = 0;
 
 
     for (auto & p : fs::recursive_directory_iterator(RootDirectory))
@@ -53,14 +53,12 @@ void LibraryFolder::CalculateFolderSize()
         }
         try
         {
-            size += (fs::file_size(p));
-            std::cout << size << "\r\n";
+            FolderSize += (fs::file_size(p));
         }
         catch(const std::exception& e)
         {
-            std::cerr << "\r\nSomething went wrong while getting the file size of \'" << p.path() << "\'\r\n" << e.what() << '\r\n';
+            std::cerr << "\r\nSomething went wrong while getting the file size of \'" << p.path() << "\':\r\n" << e.what() << '\r\n';
         }
     }
-    FolderSize = size;
-    std::cout << "Foldersize: " <<  FolderSize << "\r\n";
+    return FolderSize;
 }

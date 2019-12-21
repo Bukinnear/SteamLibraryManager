@@ -22,7 +22,7 @@ protected:
     fs::directory_entry RootDirectory;
     uintmax_t FolderSize = 0;
 
-    void CalculateFolderSize();
+    const uintmax_t CalculateFolderSize() const;
 
 private:
 };
