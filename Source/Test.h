@@ -1,12 +1,12 @@
 #pragma once
 #include <string>
 #include <iostream>
-
-using namespace std;
+#include <fstream>
 
 class Test
 {
-private:
 public:
-    void CrawlFolder();
+    Test();
+
+private:
 };

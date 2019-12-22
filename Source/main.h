@@ -1,12 +1,20 @@
 #pragma once
 #include "LibraryFolder.h"
 #include "Library.h"
+#include "ManifestReader.h"
+#include "Test.h"
+
 #include <string>
 #include <iostream>
+#include <memory>
+#include <unordered_map>
 
 const char * MainLibPath = "C:\\Program Files (x86)\\Steam";
 
 const char * ExampleGameFolder = "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Borderlands 2";
+
+// Don't Starve Together
+const std::string manifest = "E:\\SteamLibrary\\SteamApps\\appmanifest_322330.acf";
 
 /*
 #include "Library.h"    
