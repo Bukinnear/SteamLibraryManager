@@ -19,7 +19,6 @@ class LibraryFolder
     const std::string GetFolderName() const;
     const std::string GetFolderPath() const;
     const uintmax_t GetFolderSize() const;
-    void RefreshFolder() const;
     
 protected:
     fs::directory_entry RootDirectory;

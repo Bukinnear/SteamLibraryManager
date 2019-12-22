@@ -1,15 +1,9 @@
 #pragma once
 #include "LibraryFolder.h"
 
-LibraryFolder::LibraryFolder(const char * Path)
-{
-    RootDirectory = fs::directory_entry(Path);
-}
+LibraryFolder::LibraryFolder(const char * Path) : RootDirectory(Path) {}
 
-LibraryFolder::LibraryFolder(std::string Path)
-{
-    RootDirectory = fs::directory_entry(Path);
-}
+LibraryFolder::LibraryFolder(std::string Path) : RootDirectory(Path) {}
 
 bool LibraryFolder::operator==(const LibraryFolder & rhs) const
 {
@@ -69,9 +63,4 @@ const uintmax_t LibraryFolder::CalculateFolderSize() const
         }
     }
     return FolderSize;
-}
-
-void LibraryFolder::RefreshFolder() const
-{
-    CalculateFolderSize();
 }
