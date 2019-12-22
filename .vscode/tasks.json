@@ -1,19 +1,42 @@
 {
     "version": "2.0.0",
     "tasks": [
-      {
-        "label": "default msvc build",
-        "type": "shell",
-        "command": "cl.exe",
-        "args": ["/EHsc", "/Zi", "/Fe:", "Build/SteamLibraryManager.exe", "Source/main.cpp", "Source/LibraryFolder.cpp", "Source/Library.cpp"],
-        "group": {
-          "kind": "build",
-          "isDefault": true
+        {
+            "label": "default msvc build",
+            "type": "shell",
+            "command": "cl.exe",
+            "args": [
+                "/EHsc",
+                "/Zi",
+                "/std:c++17",
+                "/Fe:",
+                "Build/SteamLibraryManager.exe",
+                "Source/main.cpp",
+                "Source/LibraryFolder.cpp",
+                "Source/Library.cpp",
+                "Source/ManifestReader.cpp",
+                "Source/Test.cpp"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation": {
+                "reveal": "always"
+            },
+            "problemMatcher": "$msCompile"
         },
-        "presentation": {
-          "reveal": "always"
-        },
-        "problemMatcher": "$msCompile"
-      }
+        {
+            "type": "shell",
+            "label": "cl.exe build active file",
+            "command": "cl.exe",
+            "args": [
+                "/Zi",
+                "/EHsc",
+                "/Fe:",
+                "${fileDirname}\\${fileBasenameNoExtension}.exe",
+                "${file}"
+            ]
+        }
     ]
-  }
+}
