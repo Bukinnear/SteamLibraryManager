@@ -1,8 +1,14 @@
 #pragma once
 #include "LibraryFolder.h"
+#include "AppManifest.h"
+#include "Game.h"
+
 #include <iostream>
 #include <filesystem>
 #include <string>
+#include <memory>
+#include <vector>
+#include <unordered_map>
 #include <set>
 
 struct Compare
@@ -38,16 +44,22 @@ struct Compare
 class Library : public LibraryFolder
 {
     public:
-    Library(const char * Path);
     Library(std::string Path); 
 
-    const std::set<LibraryFolder, Compare> * const GetLibraryList() const;
     const bool ContainsFolder(std::string) const;
 
     protected:
-    fs::directory_entry CommonDirectory;
-    std::set<LibraryFolder, Compare> FolderList;
-    void BuildLibraryList();
+    fs::directory_entry SteamAppsDir;
+    fs::directory_entry CommonDir;
+    std::vector<std::shared_ptr<Game>> GameList;
+
+    const std::vector<std::shared_ptr<Game>> BuildLibraryList() const;
+    const std::unique_ptr<std::unordered_map<std::string, AppManifest>> GetAllManifests() const;
     
     private:
 };
+
+
+    //Library(const char * Path);
+    //const std::set<LibraryFolder, Compare> * const GetLibraryList() const;
+    //std::set<LibraryFolder, Compare> FolderList;
