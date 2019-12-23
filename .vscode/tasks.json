@@ -14,7 +14,8 @@
                 "Source/main.cpp",
                 "Source/LibraryFolder.cpp",
                 "Source/Library.cpp",
-                "Source/ManifestReader.cpp",
+                "Source/AppManifest.cpp",
+                "Source/Game.cpp",
                 "Source/Test.cpp"
             ],
             "group": {

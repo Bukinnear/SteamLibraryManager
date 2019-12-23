@@ -15,6 +15,16 @@ const char * ExampleGameFolder = "C:\\Program Files (x86)\\Steam\\steamapps\\com
 const std::string manifest = "E:\\SteamLibrary\\SteamApps\\appmanifest_322330.acf";
 
 /*
+main reg locations:
+32-bit: HKEY_LOCAL_MACHINE\SOFTWARE\Valve\Steam
+64-bit: HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Valve\Steam
+
+secondary locations:
+\steamapps\libraryfolders.vdf
+
+*/
+
+/*
 #include "Library.h"    
 #include <exception>    // Exceptions
 #include <filesystem>   // File manipulation

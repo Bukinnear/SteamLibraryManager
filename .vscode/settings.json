@@ -56,7 +56,10 @@
         "xutility": "cpp",
         "set": "cpp",
         "unordered_map": "cpp",
-        "xhash": "cpp"
+        "xhash": "cpp",
+        "array": "cpp",
+        "iterator": "cpp",
+        "cinttypes": "cpp"
     },
     "C_Cpp.errorSquiggles": "Enabled"
 }

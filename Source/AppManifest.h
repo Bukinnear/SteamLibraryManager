@@ -5,10 +5,11 @@
 #include <unordered_map>
 #include <filesystem>
 #include <array>
+#include <cinttypes>
 
 struct AppManifest
 {
-public:
+    public:
     const int appid;
     const std::string name;
     const int StateFlags;
@@ -44,14 +45,10 @@ public:
         BytesDownloaded(0)
     { };
 
-    static const AppManifest Read(std::string);
+    static const AppManifest ReadFromFile(std::string);
     static const bool ContainsField(std::string);
+    const bool IsValid() const;
 
-private:
+    private:
     static const std::array<std::string, 7> ManifestFields;
-};
-
-class ManifestReader
-{
-public:
 };
