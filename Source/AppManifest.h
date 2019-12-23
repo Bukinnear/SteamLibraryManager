@@ -18,20 +18,20 @@ public:
     const uintmax_t BytesDownloaded;
 
     AppManifest(
-    int Inp_appid,
-    std::string Inp_name,
-    int Inp_StateFlags,
-    std::string Inp_installdir,
-    uintmax_t Inp_SizeOnDisk,
-    uintmax_t Inp_BytesToDownload,
-    uintmax_t Inp_BytesDownloaded) : 
-        appid(Inp_appid),
-        name(Inp_name),
-        StateFlags(Inp_StateFlags),
-        installdir(Inp_installdir),
-        SizeOnDisk(Inp_SizeOnDisk),
-        BytesToDownload(Inp_BytesToDownload),
-        BytesDownloaded(Inp_BytesDownloaded)
+        int Inp_appid,
+        std::string Inp_name,
+        int Inp_StateFlags,
+        std::string Inp_installdir,
+        uintmax_t Inp_SizeOnDisk,
+        uintmax_t Inp_BytesToDownload,
+        uintmax_t Inp_BytesDownloaded) : 
+            appid(Inp_appid),
+            name(Inp_name),
+            StateFlags(Inp_StateFlags),
+            installdir(Inp_installdir),
+            SizeOnDisk(Inp_SizeOnDisk),
+            BytesToDownload(Inp_BytesToDownload),
+            BytesDownloaded(Inp_BytesDownloaded)
     { };
 
     AppManifest() : 

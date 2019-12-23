@@ -9,7 +9,7 @@ cd C:\Code\SteamLibraryManager
 int main(int argc, char const *argv[])
 {
     for (;;)
-    {        
+    {
         /*
         char FolderPath[255];
         std::cout << "Enter a path: ";
