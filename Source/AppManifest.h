@@ -44,8 +44,9 @@ public:
         BytesDownloaded(0)
     { };
 
+    static const AppManifest Read(std::string);
     static const bool ContainsField(std::string);
-    
+
 private:
     static const std::array<std::string, 7> ManifestFields;
 };
@@ -53,5 +54,4 @@ private:
 class ManifestReader
 {
 public:
-    static const AppManifest Read(std::string);
 };

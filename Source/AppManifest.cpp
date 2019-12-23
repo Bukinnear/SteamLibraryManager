@@ -1,4 +1,4 @@
-#include "ManifestReader.h"
+#include "AppManifest.h"
 
 const std::array<std::string, 7> AppManifest::ManifestFields = {"appid", "name", "StateFlags", "installdir", "SizeOnDisk", "BytesToDownload", "BytesDownloaded"};
 const bool AppManifest::ContainsField(std::string s)
@@ -10,7 +10,7 @@ const bool AppManifest::ContainsField(std::string s)
     return false;
 }
 
-const AppManifest ManifestReader::Read(std::string path)
+const AppManifest AppManifest::Read(std::string path)
 {
     if (!std::filesystem::exists(path) || !std::filesystem::is_regular_file(path))
     {
