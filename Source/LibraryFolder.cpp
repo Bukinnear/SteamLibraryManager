@@ -1,8 +1,6 @@
 #pragma once
 #include "LibraryFolder.h"
 
-LibraryFolder::LibraryFolder(const char * Path) : RootDirectory(Path) {}
-
 LibraryFolder::LibraryFolder(std::string Path) : RootDirectory(Path) {}
 
 bool LibraryFolder::operator==(const LibraryFolder & rhs) const

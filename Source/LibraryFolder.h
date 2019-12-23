@@ -8,7 +8,6 @@ namespace fs = std::experimental::filesystem;
 class LibraryFolder
 {
  public:
-    LibraryFolder(const char * Path);
     LibraryFolder(std::string Path);
 
     bool operator==(const LibraryFolder &) const;
@@ -27,4 +26,5 @@ protected:
     const uintmax_t CalculateFolderSize() const;
 
 private:
+
 };
