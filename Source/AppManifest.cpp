@@ -56,9 +56,9 @@ const AppManifest AppManifest::ReadFromFile(std::string path)
         std::string name = map.at("name");
         int stateflags = std::stoi(map.at("StateFlags"));
         std::string installdir = map.at("installdir");
-        uintmax_t sizeondisk = std::strtoumax(map.at("SizeOnDisk").c_str(), nullptr, 0);
-        uintmax_t bytestodownload = std::strtoumax(map.at("BytesToDownload").c_str(), nullptr, 0);
-        uintmax_t bytesdownloaded = std::strtoumax(map.at("BytesDownloaded").c_str(), nullptr, 0);
+        uint64_t sizeondisk = std::stoull(map.at("SizeOnDisk"));
+        uint64_t bytestodownload = std::stoull(map.at("BytesToDownload"));
+        uint64_t bytesdownloaded = std::stoull(map.at("BytesDownloaded"));
 
         return AppManifest(appid, name, stateflags, installdir, sizeondisk, bytestodownload, bytestodownload);
     }    

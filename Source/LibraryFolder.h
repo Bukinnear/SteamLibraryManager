@@ -17,13 +17,13 @@ class LibraryFolder
     const bool IsValidDirectory() const;
     const std::string GetFolderName() const;
     const std::string GetFolderPath() const;
-    const uintmax_t GetFolderSize() const;
+    const uint64_t GetFolderSize();
     
 protected:
     fs::directory_entry RootDirectory;
-    uintmax_t FolderSize = 0;
+    uint64_t FolderSize = 0;
 
-    const uintmax_t CalculateFolderSize() const;
+    const uint64_t CalculateFolderSize() const;
 
 private:
 

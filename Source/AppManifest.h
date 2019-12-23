@@ -14,18 +14,18 @@ struct AppManifest
     const std::string name;
     const int StateFlags;
     const std::string installdir;
-    const uintmax_t SizeOnDisk;
-    const uintmax_t BytesToDownload;
-    const uintmax_t BytesDownloaded;
+    const uint64_t SizeOnDisk;
+    const uint64_t BytesToDownload;
+    const uint64_t BytesDownloaded;
 
     AppManifest(
         int Inp_appid,
         std::string Inp_name,
         int Inp_StateFlags,
         std::string Inp_installdir,
-        uintmax_t Inp_SizeOnDisk,
-        uintmax_t Inp_BytesToDownload,
-        uintmax_t Inp_BytesDownloaded) : 
+        uint64_t Inp_SizeOnDisk,
+        uint64_t Inp_BytesToDownload,
+        uint64_t Inp_BytesDownloaded) : 
             appid(Inp_appid),
             name(Inp_name),
             StateFlags(Inp_StateFlags),

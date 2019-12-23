@@ -33,16 +33,19 @@ const std::string LibraryFolder::GetFolderPath() const
     return RootDirectory.path().string();
 }
 
-const uintmax_t LibraryFolder::GetFolderSize() const
+const uint64_t LibraryFolder::GetFolderSize()
 {
-    return FolderSize;
+    if (FolderSize != 0)
+    { return FolderSize; }
+    else 
+    { return FolderSize = CalculateFolderSize(); }
 }
 
-const uintmax_t LibraryFolder::CalculateFolderSize() const
+const uint64_t LibraryFolder::CalculateFolderSize() const
 {
     if (!IsValidDirectory() || fs::is_empty(RootDirectory)) { return 0; }
     
-    uintmax_t FolderSize = 0;
+    uint64_t FolderSize = 0;
 
 
     for (auto & p : fs::recursive_directory_iterator(RootDirectory))
