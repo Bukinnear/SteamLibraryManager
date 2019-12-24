@@ -2,6 +2,7 @@
 #include "LibraryFolder.h"
 #include "Library.h"
 #include "AppManifest.h"
+#include "Game.h"
 #include "Test.h"
 
 #include <string>
@@ -37,10 +38,10 @@ secondary locations:
 
 struct back : public std::exception
 {
-    const char * what () const throw ()
-    {
-        return "Back was selected";
-    }
+	const char * what () const throw ()
+	{
+		return "Back was selected";
+	}
 };
 
 bool configFileExists();
