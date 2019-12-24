@@ -3,6 +3,8 @@
 
 LibraryFolder::LibraryFolder(std::string Path) : RootDirectory(Path) {}
 
+LibraryFolder::LibraryFolder(fs::directory_entry Directory) : RootDirectory(Directory) {}
+
 bool LibraryFolder::operator==(const LibraryFolder & rhs) const
 {
     return GetFolderPath() == rhs.GetFolderPath(); 
