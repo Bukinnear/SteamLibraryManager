@@ -10,6 +10,7 @@ class LibraryFolder
  public:
     LibraryFolder(std::string Path);
     LibraryFolder(fs::directory_entry Directory);
+    LibraryFolder();
 
     bool operator==(const LibraryFolder &) const;
     bool operator<(const LibraryFolder &) const;
