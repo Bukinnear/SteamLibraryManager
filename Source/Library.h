@@ -19,6 +19,7 @@ class Library : public LibraryFolder
 	Library(std::string Path); 
 
 	const bool ContainsFolder(std::string) const;
+	const bool IsValidLibrary() const;
 
 	protected:
 	fs::directory_entry SteamAppsDir;
@@ -27,7 +28,6 @@ class Library : public LibraryFolder
 
 	const std::vector<std::shared_ptr<Game>> BuildLibraryList() const;
 	const std::unordered_map<std::string, AppManifest> AllManifests() const;
-	const bool IsValidLibrary() const;
 	
 	private:
 

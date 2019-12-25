@@ -13,9 +13,9 @@ class Game
 	Game(fs::directory_entry SteamApps, AppManifest AppManifest);
 	Game(fs::directory_entry SteamApps, fs::directory_entry In_GameDir);
 
-	const std::string GamePath() const;
-	const std::string GetName() const;
-	const uint64_t GetSize() const;
+	const std::string Path() const;
+	const std::string Name() const;
+	const uint64_t Size() const;
 	const bool CanMove() const;
 
 	bool operator==(const Game &) const;

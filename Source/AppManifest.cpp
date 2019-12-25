@@ -1,11 +1,11 @@
 #include "AppManifest.h"
 
 const std::array<std::string, 7> AppManifest::ManifestFields = {"appid", "name", "StateFlags", "installdir", "SizeOnDisk", "BytesToDownload", "BytesDownloaded"};
-const bool AppManifest::ContainsField(std::string s)
+const bool AppManifest::ContainsField(std::string Inp_Field)
 {
-	for (auto a : ManifestFields)
+	for (auto Field : ManifestFields)
 	{
-		if (a == s) { return true; }
+		if (Field == Inp_Field) { return true; }
 	}
 	return false;
 }
@@ -18,9 +18,7 @@ const AppManifest AppManifest::ReadFromFile(std::string path)
 	}
 
 	std::ifstream file(path);
-
 	std::string FileInput;
-
 	std::unordered_map<std::string, std::string> map;
 
 	while (std::getline(file, FileInput))

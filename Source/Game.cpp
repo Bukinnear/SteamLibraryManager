@@ -23,8 +23,11 @@ Game::Game(fs::directory_entry SteamApps, AppManifest AppManifest) : SteamAppsDi
 				}
 
 				std::string WkshopManifest(SteamAppsDir.path().string() + "\\workshop\\appworkshop_" + std::to_string(Manifest.appid) + ".acf");
+				
 				if (fs::exists(WkshopManifest))
-				{ WorkshopManifestPath = fs::directory_entry(WkshopManifest); }
+				{ 
+					WorkshopManifestPath = fs::directory_entry(WkshopManifest); 
+				}
 			}
 		}
 	}
@@ -34,24 +37,27 @@ Game::Game(fs::directory_entry SteamApps, fs::directory_entry In_GameDir) : Stea
 { 
 	if (GameDir.IsValidDirectory())
 	{
-		std::cout << "- Manually getting the folder size of \'" << GameDir.GetFolderPath() << "\'\r\n"; 
+		std::cout << "- Manually getting the folder size of \'" << GameDir.Path() << "\'\r\n"; 
 		GameDir.RefreshFolderSize();
 		std::cout << "- Done.\r\n";
 	}
 }
 
-const std::string Game::GamePath() const { return GameDir.GetFolderPath(); }
+const std::string Game::Path() const 
+{ 
+	return GameDir.Path(); 
+}
 
-const std::string Game::GetName() const
+const std::string Game::Name() const
 {
 	if (Manifest.IsValid()) 
 	{ return Manifest.name; }
 	else 
-	{ return GameDir.GetFolderName(); }
+	{ return GameDir.Name(); }
 	
 }
 
-const uint64_t Game::GetSize() const
+const uint64_t Game::Size() const
 {
 	if (Manifest.IsValid())
 	{ return Manifest.SizeOnDisk; }
@@ -60,13 +66,13 @@ const uint64_t Game::GetSize() const
 		if (!PathsAreValid()) 
 		{ return 0; }
 		else 
-		{ return GameDir.GetFolderSize(); }        
+		{ return GameDir.Size(); }        
 	}    
 }
 
-const bool Game::CanMove() const
-{
-	return Manifest.IsValid() && PathsAreValid();
+const bool Game::CanMove() const 
+{ 
+	return Manifest.IsValid() && PathsAreValid(); 
 }
 
 const bool Game::PathsAreValid() const
@@ -74,15 +80,15 @@ const bool Game::PathsAreValid() const
 	bool ReturnVal = GameDir.IsValidDirectory();
 	if (!ReturnVal) { return ReturnVal; }
 
-	if (WorkshopDir.GetFolderPath() != "" && !WorkshopDir.IsValidDirectory())
+	if (WorkshopDir.Path() != "" && !WorkshopDir.IsValidDirectory())
 	{
-		std::cout << "ALERT:\r\n" << GetName() << " Workshop folder \'" << WorkshopDir.GetFolderPath() << "\' is invalid.\r\n";
+		std::cout << "ALERT:\r\n" << Name() << " Workshop folder \'" << WorkshopDir.Path() << "\' is invalid.\r\n";
 		ReturnVal = false;
 	}
 
-	if (ShaderDir.GetFolderPath() != "" && !ShaderDir.IsValidDirectory())
+	if (ShaderDir.Path() != "" && !ShaderDir.IsValidDirectory())
 	{
-		std::cout << "ALERT:\r\n" << GetName() << " Shaders folder \'" << ShaderDir.GetFolderPath() << "\' is invalid.\r\n";
+		std::cout << "ALERT:\r\n" << Name() << " Shaders folder \'" << ShaderDir.Path() << "\' is invalid.\r\n";
 		ReturnVal = false;
 	}
 	return ReturnVal;
@@ -111,10 +117,10 @@ const fs::directory_entry Game::IDSubFolderPath(std::string RelativePath) const
 	return fs::directory_entry();
 }
 
-bool Game::operator==(const Game & rhs) const { return GamePath() == rhs.GamePath(); }
-bool Game::operator!=(const Game & rhs) const { return GamePath() != rhs.GamePath();}
+bool Game::operator==(const Game & rhs) const { return Path() == rhs.Path(); }
+bool Game::operator!=(const Game & rhs) const { return Path() != rhs.Path();}
 
-bool Game::operator<(const Game & rhs) const { return GetSize() < rhs.GetSize(); }
-bool Game::operator<=(const Game & rhs) const { return GetSize() <= rhs.GetSize(); }
-bool Game::operator>(const Game & rhs) const { return GetSize() > rhs.GetSize(); }
-bool Game::operator>=(const Game & rhs) const { return GetSize() >= rhs.GetSize(); }
+bool Game::operator<(const Game & rhs) const { return Size() < rhs.Size(); }
+bool Game::operator<=(const Game & rhs) const { return Size() <= rhs.Size(); }
+bool Game::operator>(const Game & rhs) const { return Size() > rhs.Size(); }
+bool Game::operator>=(const Game & rhs) const { return Size() >= rhs.Size(); }

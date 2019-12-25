@@ -7,37 +7,22 @@ LibraryFolder::LibraryFolder(fs::directory_entry Directory) : RootDirectory(Dire
 
 LibraryFolder::LibraryFolder() {}
 
-bool LibraryFolder::operator==(const LibraryFolder & rhs) const
-{
-	return GetFolderPath() == rhs.GetFolderPath(); 
-}
-
-bool LibraryFolder::operator<(const LibraryFolder & rhs) const
-{
-	return GetFolderSize() < rhs.GetFolderSize(); 
-}
-
-bool LibraryFolder::operator>(const LibraryFolder & rhs) const
-{
-	return GetFolderSize() > rhs.GetFolderSize(); 
-}
-
 const bool LibraryFolder::IsValidDirectory() const
 {
 	return (fs::exists(RootDirectory) && fs::is_directory(RootDirectory));
 }
 
-const std::string LibraryFolder::GetFolderName() const
+const std::string LibraryFolder::Name() const
 {
 	return RootDirectory.path().filename().string();
 }
 
-const std::string LibraryFolder::GetFolderPath() const
+const std::string LibraryFolder::Path() const
 {
 	return RootDirectory.path().string();
 }
 
-const uint64_t LibraryFolder::GetFolderSize() const
+const uint64_t LibraryFolder::Size() const
 {
 	return FolderSize; 
 }
@@ -65,3 +50,10 @@ const void LibraryFolder::RefreshFolderSize()
 	}
 	FolderSize = Size;
 }
+
+const bool LibraryFolder::operator==(const LibraryFolder & rhs) const { return Path() == rhs.Path(); }
+const bool LibraryFolder::operator==(const LibraryFolder & rhs) const { return Path() != rhs.Path(); }
+const bool LibraryFolder::operator<(const LibraryFolder & rhs) const { return Size() < rhs.Size(); }
+const bool LibraryFolder::operator<(const LibraryFolder & rhs) const { return Size() <= rhs.Size(); }
+const bool LibraryFolder::operator>(const LibraryFolder & rhs) const { return Size() > rhs.Size(); }
+const bool LibraryFolder::operator>(const LibraryFolder & rhs) const { return Size() >= rhs.Size(); }
