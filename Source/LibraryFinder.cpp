@@ -7,7 +7,7 @@ LibraryFinder::LibraryFinder() {}
 const std::wstring LibraryFinder::RegGetString(HKEY hKey, const std::wstring & subKey, const std::wstring & value)
 {
 	DWORD dataSize{};
-	LONG retCode = ::RegGetValue(
+	LONG retCode = ::RegGetValueW(
 	hKey,
 	subKey.c_str(),
 	value.c_str(),
@@ -24,7 +24,7 @@ const std::wstring LibraryFinder::RegGetString(HKEY hKey, const std::wstring & s
 	std::wstring data;
 	data.resize(dataSize / sizeof(wchar_t));
 
-	retCode = ::RegGetValue(
+	retCode = ::RegGetValueW(
 	hKey,
 	subKey.c_str(),
 	value.c_str(),

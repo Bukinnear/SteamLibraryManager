@@ -10,11 +10,10 @@ int main(int argc, char const *argv[])
 {
 	for (;;)
 	{
-		LibraryFinder var;
-
-		std::wstring substr = L"Test";
-		std::wstring key = L"Computer\\HKEY_LOCAL_MACHINE\\SOFTWARE\\WOW6432Node\\Valve\\Steam";
-		auto test = var.RegGetString(HKEY_LOCAL_MACHINE, substr, key);
+		//LibraryFinder var;
+		// std::wstring substr = L"Test";
+		// std::wstring key = L"Computer\\HKEY_LOCAL_MACHINE\\SOFTWARE\\WOW6432Node\\Valve\\Steam";
+		// auto test = var.RegGetString(HKEY_LOCAL_MACHINE, L"Test", L"Computer\\HKEY_LOCAL_MACHINE\\SOFTWARE\\WOW6432Node\\Valve\\Steam");
 
 		//Library test(MainLibPath);
 		/*
