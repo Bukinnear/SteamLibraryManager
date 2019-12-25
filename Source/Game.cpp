@@ -8,12 +8,19 @@ Game::Game(fs::directory_entry SteamApps, AppManifest AppManifest) : SteamAppsDi
 
 		if (GameDir.IsValidDirectory())
 		{
-			ShaderDir = SubFolderIDPath("\\shadercache");
-			WorkshopDir = SubFolderIDPath("\\workshop");
+			ShaderDir = IDSubFolderPath("\\shadercache");
+			WorkshopDir = IDSubFolderPath("\\workshop");
 
 			if (Manifest.IsValid())
 			{
-				ManifestPath = fs::directory_entry(SteamAppsDir.path().string() + "appmanifest_" + std::to_string(Manifest.appid) + ".acf");                
+				try
+				{
+					ManifestPath = fs::directory_entry(SteamAppsDir.path().string() + "\\appmanifest_" + std::to_string(Manifest.appid) + ".acf");
+				}
+				catch(const std::exception& e)
+				{
+					std::cerr << e.what() << '\n';
+				}
 
 				std::string WkshopManifest(SteamAppsDir.path().string() + "\\workshop\\appworkshop_" + std::to_string(Manifest.appid) + ".acf");
 				if (fs::exists(WkshopManifest))
@@ -27,11 +34,13 @@ Game::Game(fs::directory_entry SteamApps, fs::directory_entry In_GameDir) : Stea
 { 
 	if (GameDir.IsValidDirectory())
 	{
-		std::cout << "Manually getting the folder size of \'" << GameDir.GetFolderPath() << "\'\r\n"; 
+		std::cout << "- Manually getting the folder size of \'" << GameDir.GetFolderPath() << "\'\r\n"; 
 		GameDir.RefreshFolderSize();
-		std::cout << "Done.\r\n\r\n";
+		std::cout << "- Done.\r\n";
 	}
 }
+
+const std::string Game::GamePath() const { return GameDir.GetFolderPath(); }
 
 const std::string Game::GetName() const
 {
@@ -54,6 +63,7 @@ const uint64_t Game::GetSize() const
 		{ return GameDir.GetFolderSize(); }        
 	}    
 }
+
 const bool Game::CanMove() const
 {
 	return Manifest.IsValid() && PathsAreValid();
@@ -78,7 +88,7 @@ const bool Game::PathsAreValid() const
 	return ReturnVal;
 }
 
-const fs::directory_entry Game::SubFolderIDPath(std::string RelativePath) const
+const fs::directory_entry Game::IDSubFolderPath(std::string RelativePath) const
 {
 	if (RelativePath.empty()) 
 	{ return fs::directory_entry(); }
@@ -100,3 +110,11 @@ const fs::directory_entry Game::SubFolderIDPath(std::string RelativePath) const
 	}
 	return fs::directory_entry();
 }
+
+bool Game::operator==(const Game & rhs) const { return GamePath() == rhs.GamePath(); }
+bool Game::operator!=(const Game & rhs) const { return GamePath() != rhs.GamePath();}
+
+bool Game::operator<(const Game & rhs) const { return GetSize() < rhs.GetSize(); }
+bool Game::operator<=(const Game & rhs) const { return GetSize() <= rhs.GetSize(); }
+bool Game::operator>(const Game & rhs) const { return GetSize() > rhs.GetSize(); }
+bool Game::operator>=(const Game & rhs) const { return GetSize() >= rhs.GetSize(); }

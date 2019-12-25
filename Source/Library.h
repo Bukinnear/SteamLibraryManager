@@ -11,6 +11,29 @@
 #include <unordered_map>
 #include <set>
 
+namespace fs = std::filesystem;
+
+class Library : public LibraryFolder
+{
+	public:
+	Library(std::string Path); 
+
+	const bool ContainsFolder(std::string) const;
+
+	protected:
+	fs::directory_entry SteamAppsDir;
+	fs::directory_entry CommonDir;
+	std::vector<std::shared_ptr<Game>> GameList;
+
+	const std::vector<std::shared_ptr<Game>> BuildLibraryList() const;
+	const std::unordered_map<std::string, AppManifest> AllManifests() const;
+	const bool IsValidLibrary() const;
+	
+	private:
+
+};
+
+/*
 struct Compare
 {
 	using is_transparent = void;
@@ -40,26 +63,4 @@ struct Compare
 		return lhs < rhs.GetFolderSize();
 	}
 };
-
-class Library : public LibraryFolder
-{
-	public:
-	Library(std::string Path); 
-
-	const bool ContainsFolder(std::string) const;
-
-	protected:
-	fs::directory_entry SteamAppsDir;
-	fs::directory_entry CommonDir;
-	std::vector<std::shared_ptr<Game>> GameList;
-
-	const std::vector<std::shared_ptr<Game>> BuildLibraryList() const;
-	const std::unique_ptr<std::unordered_map<std::string, AppManifest>> GetAllManifests() const;
-	
-	private:
-};
-
-
-	//Library(const char * Path);
-	//const std::set<LibraryFolder, Compare> * const GetLibraryList() const;
-	//std::set<LibraryFolder, Compare> FolderList;
+*/
