@@ -52,8 +52,8 @@ const void LibraryFolder::RefreshFolderSize()
 }
 
 const bool LibraryFolder::operator==(const LibraryFolder & rhs) const { return Path() == rhs.Path(); }
-const bool LibraryFolder::operator==(const LibraryFolder & rhs) const { return Path() != rhs.Path(); }
+const bool LibraryFolder::operator!=(const LibraryFolder & rhs) const { return Path() != rhs.Path(); }
 const bool LibraryFolder::operator<(const LibraryFolder & rhs) const { return Size() < rhs.Size(); }
-const bool LibraryFolder::operator<(const LibraryFolder & rhs) const { return Size() <= rhs.Size(); }
+const bool LibraryFolder::operator<=(const LibraryFolder & rhs) const { return Size() <= rhs.Size(); }
 const bool LibraryFolder::operator>(const LibraryFolder & rhs) const { return Size() > rhs.Size(); }
-const bool LibraryFolder::operator>(const LibraryFolder & rhs) const { return Size() >= rhs.Size(); }
+const bool LibraryFolder::operator>=(const LibraryFolder & rhs) const { return Size() >= rhs.Size(); }

@@ -1,26 +1,2 @@
-Required functionality:
-- build a list of all library games
-
-Resources:
-- A folder full of app manifest files
-- A folder full of games folders
-
-which should I use?
-- app manifest
-- game folders
-- both (hybrid?)
-
-what do I want to do:
-- move game folders from library to library
-
-why?
-- to free up space
-
-answer:
-- I want to see every folder in the library
-- Folders should be discovered via the folders, and populated via the manifest
-
-- Todo:
-- Create a "Game" object
-    - It pulls info from the manifest, if available, and from the folder directly if not.
-- The library will create these game objects with a libraryfolder object, a steamapps directory path, and an app manifest (if available).
+Todo:
+- Auto discover folders

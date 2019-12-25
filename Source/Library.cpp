@@ -17,12 +17,12 @@ const std::vector<std::shared_ptr<Game>> Library::BuildLibraryList() const
 	std::vector<std::shared_ptr<Game>> ReturnVec;
 	if (!IsValidLibrary()) { return ReturnVec; }
 
-	std::unordered_map<std::string, AppManifest> ManifestList = AllManifests();
+	UMapPtr_str_app ManifestList = AllManifests();
 	for (auto GameFolder : fs::directory_iterator(CommonDir))
 	{
 		try 
 		{ 
-			auto Manifest = ManifestList.at(GameFolder.path().filename().string());
+			AppManifest Manifest = ManifestList->at(GameFolder.path().filename().string());
 			if (Manifest.IsValid())
 			{
 				std::shared_ptr<Game> NewGame = std::make_shared<Game>(SteamAppsDir, Manifest);
@@ -39,9 +39,9 @@ const std::vector<std::shared_ptr<Game>> Library::BuildLibraryList() const
 	return ReturnVec;
 }
 
-const std::unordered_map<std::string, AppManifest> Library::AllManifests() const
+const UMapPtr_str_app Library::AllManifests() const
 {
-	std::unordered_map<std::string, AppManifest> ReturnMap;
+	UMapPtr_str_app ReturnMap(new std::unordered_map<std::string, AppManifest>);
 
 	for (auto f : fs::directory_iterator(SteamAppsDir))
 	{
@@ -53,7 +53,7 @@ const std::unordered_map<std::string, AppManifest> Library::AllManifests() const
 		AppManifest Manifest = AppManifest::ReadFromFile(f.path().string());
 		if (Manifest.IsValid()) 
 		{ 
-			ReturnMap.insert({Manifest.installdir, Manifest}); 
+			ReturnMap->insert({Manifest.installdir, Manifest});
 		}
 	}
 	return ReturnMap;

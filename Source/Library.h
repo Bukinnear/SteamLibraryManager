@@ -13,6 +13,8 @@
 
 namespace fs = std::filesystem;
 
+using UMapPtr_str_app = std::unique_ptr<std::unordered_map<std::string, AppManifest>>;
+
 class Library : public LibraryFolder
 {
 	public:
@@ -27,7 +29,7 @@ class Library : public LibraryFolder
 	std::vector<std::shared_ptr<Game>> GameList;
 
 	const std::vector<std::shared_ptr<Game>> BuildLibraryList() const;
-	const std::unordered_map<std::string, AppManifest> AllManifests() const;
+	const UMapPtr_str_app AllManifests() const;
 	
 	private:
 
