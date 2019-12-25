@@ -10,7 +10,13 @@ int main(int argc, char const *argv[])
 {
 	for (;;)
 	{
-		Library test(MainLibPath);
+		LibraryFinder var;
+
+		std::wstring substr = L"Test";
+		std::wstring key = L"Computer\\HKEY_LOCAL_MACHINE\\SOFTWARE\\WOW6432Node\\Valve\\Steam";
+		auto test = var.RegGetString(HKEY_LOCAL_MACHINE, substr, key);
+
+		//Library test(MainLibPath);
 		/*
 		char FolderPath[255];
 		std::cout << "Enter a path: ";

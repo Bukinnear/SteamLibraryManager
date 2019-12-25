@@ -16,6 +16,7 @@
                 "Source/Library.cpp",
                 "Source/AppManifest.cpp",
                 "Source/Game.cpp",
+                "Source/LibraryFinder.cpp",
                 "Source/Test.cpp"
             ],
             "group": {
