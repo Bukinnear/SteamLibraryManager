@@ -9,15 +9,15 @@
                 "/EHsc",
                 "/Zi",
                 "/std:c++17",
+                "/incremental",
+                "/MP12",
                 "/Fe:",
                 "Build/SteamLibraryManager.exe",
-                "Source/main.cpp",
                 "Source/LibraryFolder.cpp",
                 "Source/Library.cpp",
                 "Source/AppManifest.cpp",
                 "Source/Game.cpp",
-                "Source/LibraryFinder.cpp",
-                "Source/Test.cpp"
+                "Source/main.cpp"
             ],
             "group": {
                 "kind": "build",
@@ -30,14 +30,27 @@
         },
         {
             "type": "shell",
-            "label": "cl.exe build active file",
+            "label": "build active file",
             "command": "cl.exe",
             "args": [
                 "/Zi",
                 "/EHsc",
+                "/std:c++17",
+                "/incremental",
+                "/MP12",
                 "/Fe:",
-                "${fileDirname}\\${fileBasenameNoExtension}.exe",
+                "Build/SteamLibraryManager.exe",
                 "${file}"
+            ],
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            },
+            "presentation": {
+                "reveal": "always"
+            },
+            "problemMatcher": [
+                "$msCompile"
             ]
         }
     ]
