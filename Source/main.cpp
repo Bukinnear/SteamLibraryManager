@@ -15,7 +15,8 @@ int main(int argc, char const *argv[])
 		// std::wstring key = L"Computer\\HKEY_LOCAL_MACHINE\\SOFTWARE\\WOW6432Node\\Valve\\Steam";
 		// auto test = var.RegGetString(HKEY_LOCAL_MACHINE, L"Test", L"Computer\\HKEY_LOCAL_MACHINE\\SOFTWARE\\WOW6432Node\\Valve\\Steam");
 
-		//Library test(MainLibPath);
+		Library test(MainLibPath);
+		test.Name();
 		/*
 		char FolderPath[255];
 		std::cout << "Enter a path: ";

@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <stdexcept>
 #include "Windows.h"
 //#include "winreg.h"
 //#include "winerror.h"

@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source">
+      <UniqueIdentifier>{5a2b48bb-1c6f-4363-b8cc-b1d7dc5250ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Build">
+      <UniqueIdentifier>{3f040ea1-0e68-4dd2-849f-3fbab2496fde}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include=".gitignore" />
+    <None Include="github-git-cheat-sheet.pdf" />
+    <None Include="Build\SteamLibraryManager.exe">
+      <Filter>Build</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ToDo.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Source\AppManifest.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Library.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\LibraryFinder.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\LibraryFolder.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\main.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Test.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Source\AppManifest.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Library.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\LibraryFinder.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\LibraryFolder.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\main.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Test.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
