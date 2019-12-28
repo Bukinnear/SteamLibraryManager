@@ -3,7 +3,7 @@
 #include "Library.h"
 #include "AppManifest.h"
 #include "Game.h"
-//#include "LibraryFinder.h"
+#include "LibraryFinder.h"
 #include "Test.h"
 
 #include <string>

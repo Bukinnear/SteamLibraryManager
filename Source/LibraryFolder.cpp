@@ -1,15 +1,25 @@
 #pragma once
 #include "LibraryFolder.h"
 
-LibraryFolder::LibraryFolder(std::string Path) : RootDirectory(Path) {}
+LibraryFolder::LibraryFolder(const std::string_view &Path) : RootDirectory(Path) {}
 
-LibraryFolder::LibraryFolder(fs::directory_entry Directory) : RootDirectory(Directory) {}
+LibraryFolder::LibraryFolder(const fs::directory_entry &Directory) : RootDirectory(Directory) {}
 
 LibraryFolder::LibraryFolder() {}
 
 const bool LibraryFolder::IsValidDirectory() const
 {
 	return (fs::exists(RootDirectory) && fs::is_directory(RootDirectory));
+}
+
+const bool LibraryFolder::IsValidDirectory(const fs::directory_entry &folder)
+{
+	return (fs::exists(folder) && fs::is_directory(folder));
+}
+
+const bool LibraryFolder::IsValidDirectory(const std::string_view &folder)
+{
+	return (fs::exists(folder) && fs::is_directory(folder));
 }
 
 const std::string LibraryFolder::Name() const

@@ -12,26 +12,33 @@ Library::Library(std::string Path) : LibraryFolder(Path)
 	{ std::cout << "\r\nERROR:\r\nLibrary at path \'" << RootDirectory.path().string() << "\' is not a valid library. Could not locat steamapps\\common.\r\n"; }
 }
 
+const bool Library::IsValidLibrary() const
+{
+	return CommonDir.exists() && CommonDir.is_directory();
+}
+
 const std::vector<std::shared_ptr<Game>> Library::BuildLibraryList() const
 {
 	std::vector<std::shared_ptr<Game>> ReturnVec;
 	if (!IsValidLibrary()) { return ReturnVec; }
 
 	UMapPtr_str_app ManifestList = AllManifests();
+	std::set<std::string> FoldersToManuallyScan;
+
 	for (auto GameFolder : fs::directory_iterator(CommonDir))
 	{
-		try 
-		{ 
-			AppManifest Manifest = ManifestList->at(GameFolder.path().filename().string());
+		auto FindResult = ManifestList->find(GameFolder.path().filename().string());
+		if (FindResult != ManifestList->end())
+		{
+			AppManifest Manifest = FindResult->second;
 			if (Manifest.IsValid())
 			{
 				std::shared_ptr<Game> NewGame = std::make_shared<Game>(SteamAppsDir, Manifest);
 				ReturnVec.push_back(NewGame);
 			}
 		}
-		catch(const std::exception& e) 
-		{ 
-			std::cout << "\r\nALERT:\r\nThere is no appmanifest file for: " << GameFolder.path().string() << "\r\nWe will continue, but scanning the folder size will take longer.\r\n\r\n"; 
+		else
+		{ 			
 			std::shared_ptr<Game> NewGame = std::make_shared<Game>(SteamAppsDir, GameFolder);
 			ReturnVec.push_back(NewGame);
 		}
@@ -57,9 +64,4 @@ const UMapPtr_str_app Library::AllManifests() const
 		}
 	}
 	return ReturnMap;
-}
-
-const bool Library::IsValidLibrary() const
-{
-	return CommonDir.exists() && CommonDir.is_directory();
 }

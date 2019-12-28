@@ -20,7 +20,6 @@ class Library : public LibraryFolder
 	public:
 	Library(std::string Path); 
 
-	const bool ContainsFolder(std::string) const;
 	const bool IsValidLibrary() const;
 
 	protected:
