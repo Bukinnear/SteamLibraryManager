@@ -2,10 +2,10 @@
 #include <string>
 #include <stdexcept>
 #include <set>
-#include <locale>
-#include <codecvt>
+#include <vector>
 #include "Windows.h"
 #include "LibraryFolder.h"
+#include "Library.h"
 //#include "winreg.h"
 //#include "winerror.h"
 
@@ -27,10 +27,13 @@ class LibraryFinder
 {
 public:
     LibraryFinder();
-    std::set<std::string> FindLibraryPaths();
+    const std::set<fs::directory_entry> FindLibraryPaths() const;
+
+protected:
+    const std::vector<fs::directory_entry> FindSubLibraries(const fs::directory_entry &) const;
+    const std::string FindPrimaryPathFromRegistry() const;
+    const std::wstring RegGetString(HKEY hKey, const std::wstring &subKey, const std::wstring &value) const;
 
 private:
-    const std::string FindPrimaryPathFromRegistry();
-    const std::wstring RegGetString(HKEY hKey, const std::wstring &subKey, const std::wstring &value) const;
 
 };

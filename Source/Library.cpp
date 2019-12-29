@@ -12,6 +12,21 @@ Library::Library(std::string Path) : LibraryFolder(Path)
 	{ std::cout << "\r\nERROR:\r\nLibrary at path \'" << RootDirectory.path().string() << "\' is not a valid library. Could not locat steamapps\\common.\r\n"; }
 }
 
+Library::Library(fs::directory_entry &Path) : LibraryFolder(Path)
+{
+	steamAppsDir = fs::directory_entry(Path.path().string() + "\\steamapps");
+	commonDir = fs::directory_entry(steamAppsDir.path().string() + "\\Common");
+
+	if (IsValidLibrary())
+	{
+		BuildLibraryList();
+	}
+	else
+	{
+		std::cout << "\r\nERROR:\r\nLibrary at path \'" << RootDirectory.path().string() << "\' is not a valid library. Could not locate steamapps\\common.\r\n";
+	}
+}
+
 const bool Library::ScanningRequired() const
 {
 	return !foldersToManuallyScan.empty();
@@ -30,6 +45,44 @@ void Library::ScanFolders()
 const bool Library::IsValidLibrary() const
 {
 	return commonDir.exists() && commonDir.is_directory();
+}
+
+const bool Library::IsValidLibrary(fs::directory_entry &inFolder)
+{
+	std::string inCommonPath = inFolder.path().string() + "\\steamapps\\common";
+	fs::directory_entry inCommonDir(inCommonPath);
+	return inCommonDir.exists() && inCommonDir.is_directory();
+}
+
+const bool Library::IsValidLibrary(std::string_view inFolder)
+{
+	std::string inCommonPath = inFolder.data();
+	inCommonPath += +"\\steamapps\\common";
+	fs::directory_entry inCommonDir(inCommonPath);
+	return inCommonDir.exists() && inCommonDir.is_directory();
+}
+
+const fs::directory_entry Library::LibraryFoldersVDF(const std::string_view &in_SteamDirectory)
+{
+	fs::directory_entry returnVal;
+	
+	if (fs::directory_entry(in_SteamDirectory).exists())
+	{
+		std::string vdfPath(in_SteamDirectory.data());
+		vdfPath += "\\steamapps\\libraryfolders.vdf";
+
+		returnVal = fs::directory_entry(vdfPath);
+	}
+	return returnVal;
+}
+
+void Library::ListFolders() const
+{
+	std::cout << "\nOutputting folders for " << Path() << "\n----------\n";
+	for (auto a : gameList)
+	{
+		std::cout << a->Name() << "\n";
+	}
 }
 
 void Library::BuildLibraryList()

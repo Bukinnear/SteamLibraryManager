@@ -4,29 +4,87 @@ RegistryError::RegistryError(const char *message, LONG errorCode) : std::runtime
 
 LibraryFinder::LibraryFinder() {}
 
-std::set<std::string> LibraryFinder::FindLibraryPaths()
+const std::set<fs::directory_entry> LibraryFinder::FindLibraryPaths() const
 {
-	std::set<std::string> returnVal;
+	std::set<fs::directory_entry> returnVal;
 
-	auto primaryLib = FindPrimaryPathFromRegistry();
+	auto primaryLibraryPath = FindPrimaryPathFromRegistry();
 
-	if (!primaryLib.empty())
+	if (!primaryLibraryPath.empty())
 	{
-		if (LibraryFolder::IsValidDirectory(primaryLib))
+		fs::directory_entry folder(primaryLibraryPath);
+		if (folder.exists())
 		{
-			returnVal.insert(primaryLib);
+			returnVal.insert(folder);
+
+			auto vdfPath = Library::LibraryFoldersVDF(primaryLibraryPath);
+			auto subLibraries = FindSubLibraries(vdfPath);
+
+			for (auto lib : subLibraries)
+			{
+				if (Library::IsValidLibrary(lib))
+				{
+					returnVal.insert(fs::directory_entry(lib));
+				}
+			}
 		}
 	}
-
-
 	return returnVal;
 }
 
-const std::string LibraryFinder::FindPrimaryPathFromRegistry()
+const std::vector<fs::directory_entry> LibraryFinder::FindSubLibraries(const fs::directory_entry &vdf) const
+{
+	std::vector<fs::directory_entry> returnVal;
+
+	std::ifstream file(vdf);
+	std::string currentLine;
+
+	while (std::getline(file, currentLine))
+	{
+		if (currentLine[0] != '\t' || currentLine[0] == '}' || currentLine.length() == 0)
+		{
+			continue;
+		}
+
+		int strStart;
+		int strEnd;
+		int count;
+		
+		strEnd = currentLine.find_last_of("\"", currentLine.length()) - 1;
+
+		if (strEnd == currentLine.npos)
+		{ continue; }
+
+		strStart = currentLine.find_last_of("\"", strEnd) + 1;
+
+		if (strStart == currentLine.npos)
+		{ continue; }
+		
+		count = strEnd - strStart + 1;
+		std::string value = currentLine.substr(strStart, count);
+		auto path = fs::directory_entry(value);
+
+		if (Library::IsValidLibrary(path))
+		{ returnVal.push_back(path); }
+	}
+	return returnVal;
+}
+
+const std::string LibraryFinder::FindPrimaryPathFromRegistry() const
 {
 	std::wstring substr = L"InstallPath";
 	std::wstring key = L"SOFTWARE\\Valve\\Steam";
-	std::wstring rawFoundValue = RegGetString(HKEY_LOCAL_MACHINE, key, substr);
+	std::wstring rawFoundValue;
+	try
+	{
+		rawFoundValue = RegGetString(HKEY_LOCAL_MACHINE, key, substr);
+	}
+	catch (const std::exception&) 
+	{ 
+		std::cout << "\nERROR: Could not get steam directory from registry.\n"; 
+		return "";
+	}
+	
 	int rawLength = rawFoundValue.length();
 
 	int sizeOfRawValue = WideCharToMultiByte(

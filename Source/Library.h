@@ -20,10 +20,14 @@ class Library : public LibraryFolder
 {
 	public:
 	Library(std::string Path); 
+	Library(fs::directory_entry &);
 	const bool ScanningRequired() const;
 	void ScanFolders();
-
 	const bool IsValidLibrary() const;
+	static const bool IsValidLibrary(fs::directory_entry &);
+	static const bool IsValidLibrary(std::string_view);
+	static const fs::directory_entry LibraryFoldersVDF(const std::string_view &);
+	void ListFolders() const;
 
 	protected:
 	fs::directory_entry steamAppsDir;

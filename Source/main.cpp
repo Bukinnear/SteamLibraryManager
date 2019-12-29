@@ -13,7 +13,20 @@ int main(int argc, char const *argv[])
 		LibraryFinder var;
 		auto a = var.FindLibraryPaths();
 
-		//Library test(MainLibPath);
+		std::vector<Library> test;
+		for (fs::directory_entry b : a)
+		{
+			test.push_back(Library(b));
+		}
+
+		for (auto b : test)
+		{
+			
+			b.ListFolders();
+		}
+		/*
+		Library test(MainLibPath);
+		test.ScanFolders();
 		/*
 		char FolderPath[255];
 		std::cout << "Enter a path: ";
