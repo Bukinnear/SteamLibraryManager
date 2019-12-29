@@ -37,7 +37,7 @@ const uint64_t LibraryFolder::Size() const
 	return FolderSize; 
 }
 
-const void LibraryFolder::RefreshFolderSize()
+void LibraryFolder::RefreshFolderSize()
 {
 	if (!IsValidDirectory() || fs::is_empty(RootDirectory)) { FolderSize = 0; }
 	

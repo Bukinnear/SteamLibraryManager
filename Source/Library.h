@@ -10,6 +10,7 @@
 #include <vector>
 #include <unordered_map>
 #include <set>
+#include <list>
 
 namespace fs = std::filesystem;
 
@@ -19,15 +20,18 @@ class Library : public LibraryFolder
 {
 	public:
 	Library(std::string Path); 
+	const bool ScanningRequired() const;
+	void ScanFolders();
 
 	const bool IsValidLibrary() const;
 
 	protected:
-	fs::directory_entry SteamAppsDir;
-	fs::directory_entry CommonDir;
-	std::vector<std::shared_ptr<Game>> GameList;
+	fs::directory_entry steamAppsDir;
+	fs::directory_entry commonDir;
+	std::vector<std::shared_ptr<Game>> gameList;
+	std::list<std::shared_ptr<Game>> foldersToManuallyScan;
 
-	const std::vector<std::shared_ptr<Game>> BuildLibraryList() const;
+	void BuildLibraryList();
 	const UMapPtr_str_app AllManifests() const;
 	
 	private:

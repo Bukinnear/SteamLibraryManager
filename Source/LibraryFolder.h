@@ -18,7 +18,7 @@ class LibraryFolder
 	const std::string Name() const;
 	const std::string Path() const;
 	const uint64_t Size() const;
-	const void RefreshFolderSize();
+	void RefreshFolderSize();
 
 	const bool operator==(const LibraryFolder &) const;
 	const bool operator!=(const LibraryFolder &) const;

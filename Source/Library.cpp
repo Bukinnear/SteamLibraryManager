@@ -3,65 +3,83 @@
 
 Library::Library(std::string Path) : LibraryFolder(Path)
 {
-	SteamAppsDir = fs::directory_entry(Path + "\\steamapps");
-	CommonDir = fs::directory_entry(Path + "\\steamapps\\Common");
+	steamAppsDir = fs::directory_entry(Path + "\\steamapps");
+	commonDir = fs::directory_entry(Path + "\\steamapps\\Common");
 
 	if (IsValidLibrary())
-	{ GameList = BuildLibraryList(); }
+	{ BuildLibraryList(); }
 	else
 	{ std::cout << "\r\nERROR:\r\nLibrary at path \'" << RootDirectory.path().string() << "\' is not a valid library. Could not locat steamapps\\common.\r\n"; }
 }
 
-const bool Library::IsValidLibrary() const
+const bool Library::ScanningRequired() const
 {
-	return CommonDir.exists() && CommonDir.is_directory();
+	return !foldersToManuallyScan.empty();
 }
 
-const std::vector<std::shared_ptr<Game>> Library::BuildLibraryList() const
+void Library::ScanFolders()
 {
-	std::vector<std::shared_ptr<Game>> ReturnVec;
-	if (!IsValidLibrary()) { return ReturnVec; }
-
-	UMapPtr_str_app ManifestList = AllManifests();
-	std::set<std::string> FoldersToManuallyScan;
-
-	for (auto GameFolder : fs::directory_iterator(CommonDir))
+	for (auto folder : foldersToManuallyScan)
 	{
-		auto FindResult = ManifestList->find(GameFolder.path().filename().string());
-		if (FindResult != ManifestList->end())
+		std::cout << "Scanning: " << folder->FolderName() << " ... ";
+		folder->RefreshSize();
+		std::cout << "Done\n";
+	}
+}
+
+const bool Library::IsValidLibrary() const
+{
+	return commonDir.exists() && commonDir.is_directory();
+}
+
+void Library::BuildLibraryList()
+{
+	gameList.clear();
+	foldersToManuallyScan.clear();
+
+	if (!IsValidLibrary()) { return; }
+
+	UMapPtr_str_app manifestList = AllManifests();
+
+	for (auto gameFolder : fs::directory_iterator(commonDir))
+	{
+		auto findResult = manifestList->find(gameFolder.path().filename().string());
+		if (findResult != manifestList->end())
 		{
-			AppManifest Manifest = FindResult->second;
-			if (Manifest.IsValid())
+			AppManifest manifest = findResult->second;
+			if (manifest.IsValid())
 			{
-				std::shared_ptr<Game> NewGame = std::make_shared<Game>(SteamAppsDir, Manifest);
-				ReturnVec.push_back(NewGame);
+				std::shared_ptr<Game> newGame = std::make_shared<Game>(steamAppsDir, manifest);
+				gameList.push_back(newGame);
 			}
 		}
 		else
-		{ 			
-			std::shared_ptr<Game> NewGame = std::make_shared<Game>(SteamAppsDir, GameFolder);
-			ReturnVec.push_back(NewGame);
+		{ 
+			std::shared_ptr<Game> newGame = std::make_shared<Game>(steamAppsDir, gameFolder);
+			gameList.push_back(newGame);
+			foldersToManuallyScan.push_back(newGame);
 		}
-	}	
-	return ReturnVec;
+	}
 }
 
 const UMapPtr_str_app Library::AllManifests() const
 {
-	UMapPtr_str_app ReturnMap(new std::unordered_map<std::string, AppManifest>);
+	UMapPtr_str_app returnMap(new std::unordered_map<std::string, AppManifest>);
 
-	for (auto f : fs::directory_iterator(SteamAppsDir))
+	for (auto filepath : fs::directory_iterator(steamAppsDir))
 	{
-		auto Filename = f.path().filename().string().find("appmanifest_");
-		auto NotCorrect = f.path().filename().string().npos;
+		auto filename = filepath.path().filename().string();
 
-		if (!fs::is_regular_file(f) || Filename == NotCorrect) { continue; }
+		auto isAppManifest = filename.find("appmanifest_");
+		auto notCorrect = filename.npos;
 
-		AppManifest Manifest = AppManifest::ReadFromFile(f.path().string());
-		if (Manifest.IsValid()) 
+		if (!fs::is_regular_file(filepath) || isAppManifest == notCorrect) { continue; }
+
+		AppManifest manifest = AppManifest::ReadFromFile(filepath.path().string());
+		if (manifest.IsValid()) 
 		{ 
-			ReturnMap->insert({Manifest.installdir, Manifest});
+			returnMap->insert({manifest.installdir, manifest});
 		}
 	}
-	return ReturnMap;
+	return returnMap;
 }
