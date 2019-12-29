@@ -46,6 +46,12 @@ const AppManifest AppManifest::ReadFromFile(std::string path)
 		map.insert({key, value});
 	}
 
+	if (map.size() < 7)
+	{
+		std::cout << "\nWARNING:\n" << path << " appears to be invalid - skipping.\n";
+		return AppManifest();
+	}
+
 	try
 	{
 		int a;
@@ -60,7 +66,7 @@ const AppManifest AppManifest::ReadFromFile(std::string path)
 
 		return AppManifest(appid, name, stateflags, installdir, sizeondisk, bytestodownload, bytestodownload);
 	}    
-	catch(const std::exception& e) { std::cerr << "\r\nERROR:\r\nCould not create an AppManifest for: " << path << "\r\nError Details:\r\n" << e.what() << '\r\n'; };     
+	catch(const std::exception& e) { std::cerr << "\nERROR:\nCould not create an AppManifest for: " << path << "\nError Details:\n" << e.what() << '\n\n'; };     
 
 	return AppManifest();
 }
