@@ -93,7 +93,7 @@ const bool Game::CanMove() const
 
 void Game::RefreshSize()
 {
-	if (GameDir.IsValidDirectory())
+	if (PathsAreValid())
 	{
 		GameDir.RefreshFolderSize();
 	}
