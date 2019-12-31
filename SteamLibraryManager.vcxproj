@@ -75,6 +75,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>.\Build\</OutDir>
+    <SourcePath>C:\Code\SteamLibraryManager\Source;$(VC_SourcePath)</SourcePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -104,6 +105,7 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <CompileAs>CompileAsCpp</CompileAs>
       <UseFullPaths>false</UseFullPaths>
+      <ObjectFileName>$(ProjectDir)\Build\Obj\$(IntDir)</ObjectFileName>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -156,6 +158,7 @@
     <ClCompile Include="Source\Library.cpp" />
     <ClCompile Include="Source\LibraryFinder.cpp" />
     <ClCompile Include="Source\LibraryFolder.cpp" />
+    <ClCompile Include="Source\LibraryManager.cpp" />
     <ClCompile Include="Source\main.cpp" />
     <ClCompile Include="Source\Test.cpp" />
   </ItemGroup>
@@ -165,6 +168,7 @@
     <ClInclude Include="Source\Library.h" />
     <ClInclude Include="Source\LibraryFinder.h" />
     <ClInclude Include="Source\LibraryFolder.h" />
+    <ClInclude Include="Source\LibraryManager.h" />
     <ClInclude Include="Source\main.h" />
     <ClInclude Include="Source\Test.h" />
   </ItemGroup>

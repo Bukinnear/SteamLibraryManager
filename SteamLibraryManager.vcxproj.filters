@@ -40,6 +40,9 @@
     <ClCompile Include="Source\Test.cpp">
       <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="Source\LibraryManager.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\AppManifest.h">
@@ -61,6 +64,9 @@
       <Filter>Source</Filter>
     </ClInclude>
     <ClInclude Include="Source\Test.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\LibraryManager.h">
       <Filter>Source</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,54 +1,28 @@
 #pragma once
 #include "Main.h"
 
-/*
-cl /EHsc Main.cpp Test.cpp  /nologo /std:c++latest
-cd C:\Code\SteamLibraryManager
-*/
-
 int main(int argc, char const *argv[])
 {
 	for (;;)
 	{
-		LibraryFinder var;
-		auto a = var.FindLibraryPaths();
+		std::string buffer;
 
-		std::vector<Library> test;
-		for (fs::directory_entry b : a)
-		{
-			test.push_back(Library(b));
-		}
+		std::cout << "Please enter the number of the Library you wish to manipulate: ";
+		std::cin >> buffer;
 
-		for (auto b : test)
+		for (auto character : buffer)
 		{
-			
-			b.ListFolders();
-		}
-		/*
-		Library test(MainLibPath);
-		test.ScanFolders();
-		/*
-		char FolderPath[255];
-		std::cout << "Enter a path: ";
-		std::cin.getline(FolderPath, sizeof(FolderPath));
-
-		/*
-		Code from "Library"
-		std::cout <<"\r\n";
-		for (auto a : GameList)
-		{
-			std::string tabs;
-			int length = 48 - a->GetName().length();
-			int num = length/8;
-			if (length % 8 > 0 ) { num++; }
-			for (int i = 0; i < num; i++)
+			if (!std::isdigit(character))
 			{
-				tabs += "\t";
-			}
+				std::cout << "\nThat is not a valid number.\n\n";
 
-			std::cout << a->GetName() << tabs << a->GetSize()/1024/1024 << " MB\r\n";
+				// clear the cin buffer to avoid retaining the error 
+				std::cin.clear();
+				std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			}
 		}
-		*/                
+
+		std::cout << "\n" << buffer << "\n\n";
 	}
 	return 0;
 }

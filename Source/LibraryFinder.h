@@ -37,3 +37,13 @@ protected:
 private:
 
 };
+
+/*
+main reg locations:
+32-bit: HKEY_LOCAL_MACHINE\SOFTWARE\Valve\Steam
+64-bit: HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Valve\Steam
+
+secondary locations:
+\steamapps\libraryfolders.vdf
+
+*/
