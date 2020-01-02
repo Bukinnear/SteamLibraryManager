@@ -42,6 +42,12 @@ class Library : public LibraryFolder
 
 };
 
+struct CompareLibraryPaths
+{
+	using is_transparent = void;
+	const bool operator()(const Library &lhs, const Library &rhs) const { return lhs.Path() < rhs.Path(); }
+};
+
 /*
 struct Compare
 {

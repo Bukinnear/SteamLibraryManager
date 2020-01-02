@@ -27,7 +27,7 @@ class LibraryFinder
 {
 public:
     LibraryFinder();
-    const std::set<fs::directory_entry> FindLibraryPaths() const;
+    const std::set<Library, CompareLibraryPaths> FindLibraryPaths() const;
 
 protected:
     const std::vector<fs::directory_entry> FindSubLibraries(const fs::directory_entry &) const;

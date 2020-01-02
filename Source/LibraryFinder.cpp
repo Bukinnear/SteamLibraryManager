@@ -4,9 +4,9 @@ RegistryError::RegistryError(const char *message, LONG errorCode) : std::runtime
 
 LibraryFinder::LibraryFinder() {}
 
-const std::set<fs::directory_entry> LibraryFinder::FindLibraryPaths() const
+const std::set<Library, CompareLibraryPaths> LibraryFinder::FindLibraryPaths() const
 {
-	std::set<fs::directory_entry> returnVal;
+	std::set<Library, CompareLibraryPaths> returnVal;
 
 	auto primaryLibraryPath = FindPrimaryPathFromRegistry();
 
@@ -24,7 +24,7 @@ const std::set<fs::directory_entry> LibraryFinder::FindLibraryPaths() const
 			{
 				if (Library::IsValidLibrary(lib))
 				{
-					returnVal.insert(fs::directory_entry(lib));
+					returnVal.insert(Library(lib));
 				}
 			}
 		}
