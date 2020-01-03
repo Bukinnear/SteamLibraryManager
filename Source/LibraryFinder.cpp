@@ -4,9 +4,9 @@ RegistryError::RegistryError(const char *message, LONG errorCode) : std::runtime
 
 LibraryFinder::LibraryFinder() {}
 
-const std::set<Library, CompareLibraryPaths> LibraryFinder::FindLibraryPaths() const
+const std::vector<std::shared_ptr<Library>> LibraryFinder::FindLibraryPaths() const
 {
-	std::set<Library, CompareLibraryPaths> returnVal;
+	std::vector<std::shared_ptr<Library>> returnVal;
 
 	auto primaryLibraryPath = FindPrimaryPathFromRegistry();
 
@@ -15,16 +15,18 @@ const std::set<Library, CompareLibraryPaths> LibraryFinder::FindLibraryPaths() c
 		fs::directory_entry folder(primaryLibraryPath);
 		if (folder.exists())
 		{
-			returnVal.insert(folder);
+			Library lib(folder);
+			returnVal.emplace_back(std::make_shared<Library>(lib));
 
 			auto vdfPath = Library::LibraryFoldersVDF(primaryLibraryPath);
 			auto subLibraries = FindSubLibraries(vdfPath);
 
-			for (auto lib : subLibraries)
+			for (auto subFolder : subLibraries)
 			{
-				if (Library::IsValidLibrary(lib))
+				if (Library::IsValidLibrary(subFolder))
 				{
-					returnVal.insert(Library(lib));
+					Library subLib = Library(subFolder);
+					returnVal.emplace_back(std::make_shared<Library>(subLib));
 				}
 			}
 		}
