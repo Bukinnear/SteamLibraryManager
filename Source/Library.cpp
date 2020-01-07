@@ -81,7 +81,7 @@ void Library::ListFolders() const
 	std::cout << "\nOutputting folders for " << Path() << "\n----------\n";
 	for (auto a : gameList)
 	{
-		std::cout << a->Name() << "\n";
+		std::cout << a->Name() << "\t\t\t\tSize: " << a->Size()/1024/1024/1024 << "GB\n";
 	}
 }
 

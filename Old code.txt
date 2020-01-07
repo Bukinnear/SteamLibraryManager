@@ -1,0 +1,22 @@
+// Comparison struct
+struct CompareLibraryPaths
+{
+	using is_transparent = void;
+	const bool operator()(const Library &lhs, const Library &rhs) const { return lhs.Path() < rhs.Path(); }
+};
+
+// Truncate paths
+int maxPathLength = 80;
+if (true)//lib->Path().length() > maxPathLength) // truncate the path if it is too long
+{
+	std::string rawPath = lib->Path();
+	int lastSlash = rawPath.find_last_of("\\");
+
+	std::string folderName = rawPath.substr(lastSlash);
+
+	lastSlash = rawPath.find_last_of("\\", maxPathLength - (folderName.length() + 3)); // account for the length of the name + dots
+	std::string truncPath = rawPath.substr(0, lastSlash); // adjust pos to include slash
+	
+	std::string path = truncPath + "..." + folderName;
+	
+}

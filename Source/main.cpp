@@ -5,6 +5,10 @@ int main(int argc, char const *argv[])
 {
 	for (;;)
 	{
+		Menu_LibrariesList menu;
+		menu.Activate();
+
+		/*
 		std::string buffer;
 
 		std::cout << "Please enter the number of the Library you wish to manipulate: ";
@@ -23,6 +27,7 @@ int main(int argc, char const *argv[])
 		}
 
 		std::cout << "\n" << buffer << "\n\n";
+		*/
 	}
 	return 0;
 }

@@ -150,6 +150,7 @@
     <None Include="github-git-cheat-sheet.pdf" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="Old code.txt" />
     <Text Include="ToDo.txt" />
   </ItemGroup>
   <ItemGroup>
@@ -160,6 +161,11 @@
     <ClCompile Include="Source\LibraryFolder.cpp" />
     <ClCompile Include="Source\LibraryManager.cpp" />
     <ClCompile Include="Source\main.cpp" />
+    <ClCompile Include="Source\Menu.cpp" />
+    <ClCompile Include="Source\Menu_GamesList.cpp" />
+    <ClCompile Include="Source\Menu_GameStats.cpp" />
+    <ClCompile Include="Source\Menu_LibrariesList.cpp" />
+    <ClCompile Include="Source\Menu_Move.cpp" />
     <ClCompile Include="Source\Test.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -170,6 +176,11 @@
     <ClInclude Include="Source\LibraryFolder.h" />
     <ClInclude Include="Source\LibraryManager.h" />
     <ClInclude Include="Source\main.h" />
+    <ClInclude Include="Source\Menu.h" />
+    <ClInclude Include="Source\Menu_GamesList.h" />
+    <ClInclude Include="Source\Menu_GameStats.h" />
+    <ClInclude Include="Source\Menu_LibrariesList.h" />
+    <ClInclude Include="Source\Menu_Move.h" />
     <ClInclude Include="Source\Test.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
