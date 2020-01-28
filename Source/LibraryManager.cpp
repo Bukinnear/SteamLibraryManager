@@ -43,6 +43,36 @@ void LibraryManager::PrintLibraries() const
 		std::shared_ptr<Library> lib = *iter;
 
 		std::cout << "  " << index << ": \'" << lib->Path() << "\' : " << lib->Size() << "\n";
+		
+		/*
+		total length = x
+		y = 1 + index + 3 + Path() 
+		z = 3 + Size() OR Size() (on a new line)
+
+		x = y + z
+
+		// if the path + extra > than the required length
+		if (y > x)
+		{ 
+			// find out how many lines it takes up
+			// TODO: find a way to only retrieve whole numbers, do ints allow this, or will they round up?
+			int number_of_lines = y / x
+
+			// if adding the size would be too much
+			if (((y + z) / x) > number_of_lines)
+			{
+				// Put size at the end of a new line
+				y += "\n" + ((x - z) + z) spaces + "\' : " + lib->Size() + "\n"
+			}
+			else
+			{
+				// Add y + z into one
+				y += "\' : " + lib->Size() + "\n"
+			}
+
+		}
+
+		*/
 	}
 }
 
