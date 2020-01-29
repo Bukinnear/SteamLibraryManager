@@ -13,4 +13,6 @@ public:
 private:
 	LibraryManager manager;
 
+	void PrintLibraries(const std::vector<std::shared_ptr<Library>> list) const;
+
 };
