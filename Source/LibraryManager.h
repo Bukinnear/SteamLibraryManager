@@ -8,6 +8,7 @@ public:
 	void PopulateLibraries();
 	void Sort(bool bySize = false);
 	void PrintLibraries() const;
+	const std::vector<std::shared_ptr<Library>> &List() const;
 	const std::shared_ptr<Library> At(int) const;
 
 protected:

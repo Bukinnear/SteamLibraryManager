@@ -46,6 +46,11 @@ void LibraryManager::PrintLibraries() const
 	}
 }
 
+const std::vector<std::shared_ptr<Library>> &LibraryManager::List() const
+{
+	return libraryList;
+}
+
 const std::shared_ptr<Library> LibraryManager::At(int pos) const
 {
 	std::shared_ptr<Library> returnVal;
