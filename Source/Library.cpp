@@ -40,6 +40,7 @@ void Library::ScanFolders()
 		folder->RefreshSize();
 		std::cout << "Done\n";
 	}
+	std::cout << "\n";
 }
 
 const bool Library::IsValidLibrary() const
@@ -83,6 +84,11 @@ void Library::ListFolders() const
 	{
 		std::cout << a->Name() << "\t\t\t\tSize: " << a->Size()/1024/1024/1024 << "GB\n";
 	}
+}
+
+const std::vector<std::shared_ptr<Game>>& Library::FolderList()
+{
+	return gameList;
 }
 
 void Library::BuildLibraryList()
