@@ -63,6 +63,30 @@ const bool Library::IsValidLibrary(std::string_view inFolder)
 	return inCommonDir.exists() && inCommonDir.is_directory();
 }
 
+void Library::SortListByName()
+{
+	std::sort(
+		gameList.begin(),
+		gameList.end(),
+		[](std::shared_ptr<Game> lhs, std::shared_ptr<Game> rhs)
+		{
+			return lhs->Name() < rhs->Name();
+		}
+	);
+}
+
+void Library::SortListBySize()
+{
+	std::sort(
+		gameList.begin(),
+		gameList.end(),
+		[](std::shared_ptr<Game> lhs, std::shared_ptr<Game> rhs)
+		{
+			return lhs->Size() > rhs->Size();
+		}
+	);
+}
+
 const fs::directory_entry Library::LibraryFoldersVDF(const std::string_view &in_SteamDirectory)
 {
 	fs::directory_entry returnVal;
@@ -75,15 +99,6 @@ const fs::directory_entry Library::LibraryFoldersVDF(const std::string_view &in_
 		returnVal = fs::directory_entry(vdfPath);
 	}
 	return returnVal;
-}
-
-void Library::ListFolders() const
-{
-	std::cout << "\nOutputting folders for " << Path() << "\n----------\n";
-	for (auto a : gameList)
-	{
-		std::cout << a->Name() << "\t\t\t\tSize: " << a->Size()/1024/1024/1024 << "GB\n";
-	}
 }
 
 const std::vector<std::shared_ptr<Game>>& Library::FolderList()

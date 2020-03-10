@@ -26,6 +26,8 @@ class Library : public LibraryFolder
 	const bool IsValidLibrary() const;
 	static const bool IsValidLibrary(fs::directory_entry &);
 	static const bool IsValidLibrary(std::string_view);
+	void SortListByName();
+	void SortListBySize();
 	static const fs::directory_entry LibraryFoldersVDF(const std::string_view &);
 	const std::vector<std::shared_ptr<Game>>& FolderList();
 
@@ -39,6 +41,5 @@ class Library : public LibraryFolder
 	const UMapPtr_str_app AllManifests() const;
 	
 	private:
-	void ListFolders() const;
 
 };
