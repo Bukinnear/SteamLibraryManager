@@ -11,6 +11,7 @@ const std::map<int, std::string> Menu::byteSize = {
 	{5, "PB"},
 	{6, "Too Big!"}
 };
+const std::string Menu::spacerPattern = std::string(" . ");
 
 int Menu::Activate()
 {
@@ -69,19 +70,29 @@ void Menu::OutputMenuItem(const int index, const std::string_view item, const st
 	}
 
 	std::string spacer = "";
-
-	// Do things here
+		
+	// Make a spacer before the size field
 	int lineLength = currentPoint - lastPoint + 1;
 	int spacerLength = targetLength_Size - lineLength;
 
+	for (int i = spacerLength % spacerPattern.length(); i > 0; i--)
+		spacer.append(" ");
+
+	for (int i = spacerLength; (i > 0) && (i >= spacerPattern.length()); i -= spacerPattern.length())
+		spacer.append(spacerPattern);
+		
+	/*
 	int numberOfTabs = spacerLength / 8;
 	int numberOfSpaces = spacerLength % 8;
 
+	// Add spaces
 	for (; numberOfSpaces > 0; numberOfSpaces--)
 		spacer.append(" ");
 
+	// add tabs
 	for (; numberOfTabs > 0; numberOfTabs--)
 		spacer.append("\t");
+	*/
 
 	std::cout << ourString << spacer << ": " << size << "\n";
 }
@@ -101,5 +112,5 @@ std::string Menu::TruncateSize(uint64_t size)
 		}
 	} while (tempSize > 0 && index < 6);
 
-	return std::string(std::to_string(size) + byteSize.at(index));
+	return std::string(std::to_string(size) + ' ' + byteSize.at(index));
 }

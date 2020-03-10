@@ -15,6 +15,7 @@ private:
 	const static int targetLength = 75;
 	const static int targetLength_Size = 100;
 	const static int wrapSpaces = 7;
+	const static std::string spacerPattern;
 
 	const static std::map<int, std::string> byteSize;
 };
