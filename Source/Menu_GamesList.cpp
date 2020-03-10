@@ -11,11 +11,12 @@ int Menu_GamesList::Activate()
 	if (selectedLibrary->ScanningRequired())
 		selectedLibrary->ScanFolders();
 
+	selectedLibrary->SortListBySize();
+
 	int index = 1;
 	for (auto game : selectedLibrary->FolderList())
 	{
-		auto a = TruncateSize(game->Size());
-		OutputMenuItem(index, game->Name(), a);
+		OutputMenuItem(index, game->Name(), TruncateSize(game->Size()));
 		index++;
 	}
 
